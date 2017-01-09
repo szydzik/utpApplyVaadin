@@ -25,6 +25,7 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
     private final PasswordField password;
 
     private final Button loginButton;
+    private final Button googleButton;
 
     public SimpleLoginView() {
         setSizeFull();
@@ -54,8 +55,10 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
         // Create login button
         loginButton = new Button("Login", this);
 
+        googleButton = new Button("Google", this);
+
         // Add both to a panel
-        VerticalLayout fields = new VerticalLayout(email, password, loginButton);
+        VerticalLayout fields = new VerticalLayout(email, password, loginButton, googleButton);
         fields.setSpacing(true);
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
@@ -77,6 +80,10 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
     @Override
     public void buttonClick(Button.ClickEvent event) {
 
+        if (event.getButton() == googleButton){
+            getUI().getNavigator().navigateTo(UserPanel.VIEW_NAME);//
+        }
+
         //
         // Validate the fields using the navigator. By using validors for the
         // fields we reduce the amount of queries we have to use to the database
@@ -94,7 +101,7 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
         // I use a dummy username and password.
         //
         boolean isValid = username.equals("test@test.com")
-                && password.equals("passw0rd");
+                && password.equals("password");
 
         if (isValid) {
 
