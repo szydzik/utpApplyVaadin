@@ -71,13 +71,12 @@ public class SimpleLoginView extends CustomComponent implements View {
         facebookButton.setWidth("300px");
         facebookButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
         facebookButton.addClickListener(event -> {
-//            TODO - Facebook login
+            getUI().getPage().setLocation("/login/facebook");
 
         });
 
         googleButton = new Button("Log in with Google", FontAwesome.GOOGLE);
         googleButton.setWidth("300px");
-//        googleButton.setStyleName(ValoTheme.Button_);
         googleButton.addClickListener(event -> {});
 
         // Add both to a panel
