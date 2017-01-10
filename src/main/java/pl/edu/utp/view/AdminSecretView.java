@@ -11,20 +11,18 @@ import javax.annotation.PostConstruct;
 /**
  * Created by xxbar on 10.01.2017.
  */
+@SpringView(name = AdminSecretView.VIEW_NAME)
+public class AdminSecretView extends VerticalLayout implements View {
 
-@SpringView(name = UserListView.VIEW_NAME)
-public class UserListView extends VerticalLayout implements View  {
+    public static final String VIEW_NAME = "admin-secret";
 
-    public static final String VIEW_NAME = "user-list";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
     }
 
     @PostConstruct
     void init() {
         addComponent(new Label("Widok: "+VIEW_NAME));
     }
-
 }

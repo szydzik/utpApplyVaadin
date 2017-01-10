@@ -11,10 +11,10 @@ import javax.annotation.PostConstruct;
 /**
  * Created by xxbar on 10.01.2017.
  */
-@SpringView(name = WelcomeView.VIEW_NAME)
-public class WelcomeView extends VerticalLayout implements View {
+@SpringView(name = AdminHomeView.VIEW_NAME)
+public class AdminHomeView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "welcome";
+    public static final String VIEW_NAME = "admin-home";
 
 
     @Override

@@ -13,10 +13,10 @@ import javax.annotation.PostConstruct;
  * Created by xxbar on 10.01.2017.
  */
 @UIScope
-@SpringView(name = AccessDeniedView.VIEW_NAME)
-public class AccessDeniedView extends VerticalLayout implements View {
+@SpringView(name = CustomNotFoundView.VIEW_NAME)
+public class CustomNotFoundView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "access-denied";
+    public static final String VIEW_NAME = "custom-not-found";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -27,6 +27,6 @@ public class AccessDeniedView extends VerticalLayout implements View {
     void init() {
         setMargin(true);
         setSpacing(true);
-        addComponent(new Label("MyError: Access Denied"));
+        addComponent(new Label("MyError: Nie znaleziono widoku."));
     }
 }
