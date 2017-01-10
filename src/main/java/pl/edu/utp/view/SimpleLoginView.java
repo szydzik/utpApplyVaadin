@@ -16,8 +16,8 @@ import pl.edu.utp.validator.CustomValidator;
  * Created by xxbar on 08.01.2017.
  */
 @UIScope
-@SpringView(name = LogInView.VIEW_NAME)
-public class LogInView extends CustomComponent implements View {
+@SpringView(name = SimpleLoginView.VIEW_NAME)
+public class SimpleLoginView extends CustomComponent implements View {
 
     public static final String VIEW_NAME = "login";
 
@@ -28,7 +28,7 @@ public class LogInView extends CustomComponent implements View {
     private final Button facebookButton;
     private final Button googleButton;
 
-    public LogInView() {
+    public SimpleLoginView() {
         setSizeFull();
 
         // Create the email input field
@@ -57,24 +57,21 @@ public class LogInView extends CustomComponent implements View {
         loginButton = new Button("Login");
         loginButton.setWidth("300px");
         loginButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+
         loginButton.addClickListener(event -> {
             if (!email.isValid() || !password.isValid()) {
                 return;
             }
-            String username = email.getValue();
+            String username = this.email.getValue();
             String password = this.password.getValue();
-            boolean isValid = username.equals("test@test.com") && password.equals("password");
-            if (isValid) {
-                // Store the current email in the service session
-                getSession().setAttribute("email", username);
-//                getUI().getNavigator().navigateTo(.VIEW_NAME);//
-            }
+
         });
 
         facebookButton = new Button("Log in with Facebook", FontAwesome.FACEBOOK);
         facebookButton.setWidth("300px");
         facebookButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
         facebookButton.addClickListener(event -> {
+//            TODO - Facebook login
 
         });
 

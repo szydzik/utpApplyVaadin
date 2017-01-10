@@ -11,10 +11,11 @@ import javax.annotation.PostConstruct;
 /**
  * Created by xxbar on 10.01.2017.
  */
-@SpringView(name = HomePageView.VIEW_NAME)
-public class HomePageView extends VerticalLayout implements View {
+@SpringView(name = UserHomeView.VIEW_NAME)
+public class UserHomeView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "";
+    public static final String VIEW_NAME = "user-home";
+
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -22,7 +23,6 @@ public class HomePageView extends VerticalLayout implements View {
 
     @PostConstruct
     void init() {
-        addComponent(new Label("HomePage"));
+        addComponent(new Label("Widok: "+VIEW_NAME));
     }
-
 }
