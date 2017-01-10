@@ -19,7 +19,7 @@ import pl.edu.utp.validator.CustomValidator;
 @SpringView(name = LogInView.VIEW_NAME)
 public class LogInView extends CustomComponent implements View {
 
-    public static final String VIEW_NAME = "log-in";
+    public static final String VIEW_NAME = "login";
 
     private final TextField email;
     private final PasswordField password;
@@ -74,7 +74,9 @@ public class LogInView extends CustomComponent implements View {
         facebookButton = new Button("Log in with Facebook", FontAwesome.FACEBOOK);
         facebookButton.setWidth("300px");
         facebookButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        facebookButton.addClickListener(event -> {});
+        facebookButton.addClickListener(event -> {
+
+        });
 
         googleButton = new Button("Log in with Google", FontAwesome.GOOGLE);
         googleButton.setWidth("300px");
