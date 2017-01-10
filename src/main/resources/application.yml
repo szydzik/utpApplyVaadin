@@ -1,30 +1,15 @@
-#spring:
-#    datasource:
-#        driverClassName: org.postgresql.Driver
-#        password: password
-#        url: jdbc:postgresql://localhost:5432/postgres
-#        username: postgres
-#    jpa:
-#        hibernate:
-#            ddl-auto: create-drop
-#        properties:
-#            hibernate:
-#                dialect: org.hibernate.dialect.PostgreSQLDialect
-
-#
-#security:
-#    oauth2:
-#        client:
-#            accessTokenUri: https://graph.facebook.com/oauth/access_token
-#            authenticationScheme: query
-#            clientAuthenticationScheme: form
-#            clientId: 579641695554740
-#            clientSecret: 8aab19c71f2e73b158a389904b0ceb5b
-#            tokenName: oauth_token
-#            userAuthorizationUri: https://www.facebook.com/dialog/oauth
-#        resource:
-#            userInfoUri: https://graph.facebook.com/me
-
+spring:
+    datasource:
+        driverClassName: org.postgresql.Driver
+        password: password
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
 
 facebook:
   client:
@@ -37,3 +22,23 @@ facebook:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://graph.facebook.com/me
+
+github:
+  client:
+    clientId: d112ab2c78c2d08dee63
+    clientSecret: a1cb376a8ce50a7d080cd963d69fab8b8d568555
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+
+#google:
+#  client:
+#   client_id: "413197451484-b8ira33g2d0nl9ovpb4uiganuflmtnl6.apps.googleusercontent.com"
+#   project_id: utpapply
+#   auth_uri: "https://accounts.google.com/o/oauth2/auth"
+#   token_uri: "https://accounts.google.com/o/oauth2/token"
+#   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+#   client_secret: "Jm8d4mXpJfym9z-CGGpxLmPk"
+#   redirect_uris: "http://localhost:8080"

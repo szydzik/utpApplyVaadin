@@ -101,4 +101,25 @@ public class MyUI extends UI implements ViewDisplay {
         panel.setContent((Component) view);
     }
 
+    private void displayAnonymousNavbar() {
+        btnAdminHidden.setVisible(false);
+        btnLogout.setVisible(false);
+        btnSignIn.setVisible(true);
+        btnSignUp.setVisible(true);
+    }
+
+    private void displayUserNavbar() {
+        btnAdminHidden.setVisible(false);
+        btnLogout.setVisible(true);
+        btnSignIn.setVisible(false);
+        btnSignUp.setVisible(false);
+    }
+
+    private void displayAdminNavbar() {
+        btnAdminHidden.setVisible(true);
+        btnLogout.setVisible(true);
+        btnSignIn.setVisible(false);
+        btnSignUp.setVisible(false);
+    }
+
 }

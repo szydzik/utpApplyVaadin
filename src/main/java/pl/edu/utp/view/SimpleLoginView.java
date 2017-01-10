@@ -27,6 +27,7 @@ public class SimpleLoginView extends CustomComponent implements View {
     private final Button loginButton;
     private final Button facebookButton;
     private final Button googleButton;
+    private final Button gitHubButton;
 
     public SimpleLoginView() {
         setSizeFull();
@@ -79,8 +80,14 @@ public class SimpleLoginView extends CustomComponent implements View {
         googleButton.setWidth("300px");
         googleButton.addClickListener(event -> {});
 
+        gitHubButton = new Button("Log in with Github", FontAwesome.GITHUB);
+        gitHubButton.setWidth("300px");
+        gitHubButton.addClickListener(event -> {
+            getUI().getPage().setLocation("/login/github");
+        });
+
         // Add both to a panel
-        VerticalLayout fields = new VerticalLayout(email, password, loginButton, facebookButton, googleButton);
+        VerticalLayout fields = new VerticalLayout(email, password, loginButton, facebookButton, googleButton, gitHubButton);
         fields.setSpacing(true);
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
