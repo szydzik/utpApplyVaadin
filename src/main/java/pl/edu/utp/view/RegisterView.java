@@ -10,7 +10,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.edu.utp.view.validator.CustomValidator;
+import pl.edu.utp.validator.CustomValidator;
 
 import java.util.Date;
 

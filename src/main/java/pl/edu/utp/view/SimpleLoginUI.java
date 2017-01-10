@@ -24,7 +24,7 @@ public class SimpleLoginUI extends UI {
         //
         // The initial log view where the user can login to the application
         //
-        getNavigator().addView(SimpleLoginView.VIEW_NAME, SimpleLoginView.class);//
+        getNavigator().addView(LogInView.VIEW_NAME, LogInView.class);//
 
         //
         // Add the main view of the application
@@ -43,12 +43,12 @@ public class SimpleLoginUI extends UI {
 
                 // Check if a user has logged in
                 boolean isLoggedIn = getSession().getAttribute("user") != null;
-                boolean isLoginView = event.getNewView() instanceof SimpleLoginView;
+                boolean isLoginView = event.getNewView() instanceof LogInView;
 
                 if (!isLoggedIn && !isLoginView) {
                     // Redirect to login view always if a user has not yet
                     // logged in
-                    getNavigator().navigateTo(SimpleLoginView.VIEW_NAME);
+                    getNavigator().navigateTo(LogInView.VIEW_NAME);
                     return false;
 
                 } else if (isLoggedIn && isLoginView) {

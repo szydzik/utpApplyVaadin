@@ -9,19 +9,20 @@ import com.vaadin.ui.VerticalLayout;
 import javax.annotation.PostConstruct;
 
 /**
- * Created by xxbar on 08.01.2017.
+ * Created by xxbar on 10.01.2017.
  */
-@SpringView(name = DefaultView.VIEW_NAME)
-public class DefaultView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "default";
+@SpringView(name = HomePageView.VIEW_NAME)
+public class HomePageView extends VerticalLayout implements View {
 
-    @PostConstruct
-    void init() {
-        addComponent(new Label("This is the default view"));
-    }
+    public static final String VIEW_NAME = "";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        // This view is constructed in the init() method()
     }
+
+    @PostConstruct
+    void init() {
+        addComponent(new Label("HomePage"));
+    }
+
 }

@@ -8,10 +8,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.edu.utp.view.RegisterView;
-import pl.edu.utp.view.SimpleLoginView;
-import pl.edu.utp.view.UIScopedView;
-import pl.edu.utp.view.ViewScopedView;
+import pl.edu.utp.view.*;
+import pl.edu.utp.view.error.AccessDeniedView;
 
 /**
  * Created by xxbar on 09.01.2017.
@@ -35,17 +33,21 @@ public class MyUI extends UI implements ViewDisplay {
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
 
-        navigationBar.addComponent(createNavigationButton("UI Scoped View",
-                UIScopedView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("View Scoped View",
-                ViewScopedView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Simple Login View",
-                SimpleLoginView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Register View",
+        navigationBar.addComponent(createNavigationButton("HomePageView",
+                HomePageView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("LogInView",
+                LogInView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("RegisterView",
                 RegisterView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("UserListView",
+                UserListView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("WelcomeView",
+                WelcomeView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("AccessDeniedView",
+                AccessDeniedView.VIEW_NAME));
 
 
-
+        getNavigator().setErrorView(AccessDeniedView.class);
 
         root.addComponent(navigationBar);
 

@@ -1,4 +1,4 @@
-package pl.edu.utp.view.validator;
+package pl.edu.utp.validator;
 import com.vaadin.data.validator.AbstractValidator;
 
 /**

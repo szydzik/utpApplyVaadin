@@ -10,24 +10,25 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.edu.utp.view.validator.CustomValidator;
+import pl.edu.utp.validator.CustomValidator;
 
 /**
  * Created by xxbar on 08.01.2017.
  */
 @UIScope
-@SpringView(name = SimpleLoginView.VIEW_NAME)
-public class SimpleLoginView extends CustomComponent implements View, Button.ClickListener {
+@SpringView(name = LogInView.VIEW_NAME)
+public class LogInView extends CustomComponent implements View {
 
-    public static final String VIEW_NAME = "login";
+    public static final String VIEW_NAME = "log-in";
 
     private final TextField email;
     private final PasswordField password;
 
     private final Button loginButton;
+    private final Button facebookButton;
     private final Button googleButton;
 
-    public SimpleLoginView() {
+    public LogInView() {
         setSizeFull();
 
         // Create the email input field
@@ -36,7 +37,7 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
         email.setRequired(true);
         email.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
         email.setIcon(FontAwesome.ENVELOPE);
-        email.setInputPrompt("login (eg. joe@email.com)");
+        email.setInputPrompt("Email");
         email.addValidator(new EmailValidator(
                 "Username must be an email address"));
         email.setInvalidAllowed(false);
@@ -48,17 +49,40 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
         password.setRequired(true);
         password.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
         password.setIcon(FontAwesome.LOCK);
-        password.setInputPrompt("password,");
-        password.setValue("");
+        password.setInputPrompt("Password");
+//        password.setValue("");
         password.setNullRepresentation("");
 
         // Create login button
-        loginButton = new Button("Login", this);
+        loginButton = new Button("Login");
+        loginButton.setWidth("300px");
+        loginButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+        loginButton.addClickListener(event -> {
+            if (!email.isValid() || !password.isValid()) {
+                return;
+            }
+            String username = email.getValue();
+            String password = this.password.getValue();
+            boolean isValid = username.equals("test@test.com") && password.equals("password");
+            if (isValid) {
+                // Store the current email in the service session
+                getSession().setAttribute("email", username);
+//                getUI().getNavigator().navigateTo(.VIEW_NAME);//
+            }
+        });
 
-        googleButton = new Button("Google", this);
+        facebookButton = new Button("Log in with Facebook", FontAwesome.FACEBOOK);
+        facebookButton.setWidth("300px");
+        facebookButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        facebookButton.addClickListener(event -> {});
+
+        googleButton = new Button("Log in with Google", FontAwesome.GOOGLE);
+        googleButton.setWidth("300px");
+//        googleButton.setStyleName(ValoTheme.Button_);
+        googleButton.addClickListener(event -> {});
 
         // Add both to a panel
-        VerticalLayout fields = new VerticalLayout(email, password, loginButton, googleButton);
+        VerticalLayout fields = new VerticalLayout(email, password, loginButton, facebookButton, googleButton);
         fields.setSpacing(true);
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
@@ -73,50 +97,6 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        // focus the username field when email arrives to the login view
-        email.focus();
     }
 
-    @Override
-    public void buttonClick(Button.ClickEvent event) {
-
-        if (event.getButton() == googleButton){
-            getUI().getNavigator().navigateTo(UserPanel.VIEW_NAME);//
-        }
-
-        //
-        // Validate the fields using the navigator. By using validors for the
-        // fields we reduce the amount of queries we have to use to the database
-        // for wrongly entered passwords
-        //
-        if (!email.isValid() || !password.isValid()) {
-            return;
-        }
-
-        String username = email.getValue();
-        String password = this.password.getValue();
-
-        //
-        // Validate username and password with database here. For examples sake
-        // I use a dummy username and password.
-        //
-        boolean isValid = username.equals("test@test.com")
-                && password.equals("password");
-
-        if (isValid) {
-
-            // Store the current email in the service session
-            getSession().setAttribute("email", username);
-
-            // Navigate to main view
-            getUI().getNavigator().navigateTo(SimpleLoginMainView.VIEW_NAME);//
-
-        } else {
-
-            // Wrong password clear the password field and refocuses it
-            this.password.setValue(null);
-            this.password.focus();
-
-        }
-    }
 }

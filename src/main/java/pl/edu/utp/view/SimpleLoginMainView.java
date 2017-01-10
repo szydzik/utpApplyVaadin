@@ -16,7 +16,7 @@ import com.vaadin.ui.Label;
 @SpringView(name = SimpleLoginMainView.VIEW_NAME)
 public class SimpleLoginMainView extends CustomComponent implements View {
 
-    public static final String VIEW_NAME = "";
+    public static final String VIEW_NAME = "simple-login";
 
     Label text = new Label();
 
@@ -29,7 +29,7 @@ public class SimpleLoginMainView extends CustomComponent implements View {
             getSession().setAttribute("user", null);
 
             // Refresh this view, should redirect to login view
-            getUI().getNavigator().navigateTo(SimpleLoginView.VIEW_NAME);
+            getUI().getNavigator().navigateTo(LogInView.VIEW_NAME);
         }
     });
 
