@@ -1,99 +1,104 @@
 package pl.edu.utp;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.ui.UI;
-import org.springframework.beans.factory.annotation.Autowired;
-import pl.edu.utp.view.MainLayout;
+import com.vaadin.spring.annotation.SpringViewDisplay;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import pl.edu.utp.view.*;
+import pl.edu.utp.view.error.CustomNotFoundView;
 
 /**
  * Created by xxbar on 09.01.2017.
  */
 @Theme("valo")
 @SpringUI
-//@SpringViewDisplay
-public class MyUI extends UI {//implements ViewDisplay {
+@SpringViewDisplay
+public class MyUI extends UI implements ViewDisplay {
 
-    @Autowired
-    MainLayout mainLayout;
 
-    @Autowired
-    SpringViewProvider springViewProvider;
+    private Panel panel;
 
-//    private Panel panel;
-
-//    @Override
-//    protected void init(VaadinRequest request) {
-//
-//        final VerticalLayout root = new VerticalLayout();
-//        root.setSizeFull();
-//        root.setMargin(true);
-//        root.setSpacing(true);
-//        setContent(root);
-//
-//        final CssLayout navigationBar = new CssLayout();
-//        navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-//
-//        navigationBar.addComponent(createNavigationButton("HomeView",
-//                HomeView.VIEW_NAME));
-//        navigationBar.addComponent(createNavigationButton("UserHomeView",
-//                UserHomeView.VIEW_NAME));
-//        navigationBar.addComponent(createNavigationButton("AdminHomeView",
-//                AdminHomeView.VIEW_NAME));
-//        navigationBar.addComponent(createNavigationButton("AdminSecretView",
-//                AdminSecretView.VIEW_NAME));
-//        navigationBar.addComponent(createNavigationButton("LogInView",
-//                SimpleLoginView.VIEW_NAME));
-//
-//        //Log Out button and nav
-//        Button button = new Button("Log Out");
-//        button.addStyleName(ValoTheme.BUTTON_SMALL);
-//        button.addClickListener(event -> {
-//            getUI().getNavigator().navigateTo(HomeView.VIEW_NAME);
-//        });
-//        navigationBar.addComponent(button);
-//
-////        navigationBar.addComponent(createNavigationButton("RegisterView",
-////                RegisterView.VIEW_NAME));
-//
-//        getNavigator().setErrorView(CustomNotFoundView.class);
-//
-//        root.addComponent(navigationBar);
-//
-//        panel = new Panel();
-//        panel.setSizeFull();
-//        root.addComponent(panel);
-//        root.setExpandRatio(panel, 1.0f);
-//
-//    }
+    //buttons
+    private Button btnHome;
+    private Button btnUser;
+    private Button btnAdmin;
+    private Button btnAdminHidden;
+    private Button btnSignIn;
+    private Button btnSignUp;
+    private Button btnLogout;
 
     @Override
     protected void init(VaadinRequest request) {
-//        setLocale(new Locale.Builder().setLanguage("sr").setScript("Latn").setRegion("RS").build());
-//        SecuredNavigator securedNavigator = new SecuredNavigator(MainUI.this, mainLayout, springViewProvider, security, eventBus);
-//        securedNavigator.addViewChangeListener(mainLayout);
-//        setContent(mainLayout);
-//        setErrorHandler(new SpringSecurityErrorHandler());
-//        Navigator navigator = new Navigator(this,mainLayout);
 
-//        new Navigator(this,(ViewDisplay) mainLayout);
-        getNavigator().addViewChangeListener(mainLayout);
-        getNavigator().addProvider(springViewProvider);
-        setContent(mainLayout);
+        final VerticalLayout root = new VerticalLayout();
+        root.setSizeFull();
+        root.setMargin(false);
+        root.setSpacing(true);
+        setContent(root);
+
+
+        //-------nav-------
+//        final CssLayout navigationBar = new CssLayout();
+        final HorizontalLayout navigationBar = new HorizontalLayout();
+        navigationBar.setWidth("100%");
+        navigationBar.setMargin(true);
+        navigationBar.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+//        navigationBar.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+        final Label brand = new Label("utpAPPLY");
+        brand.addStyleName(ValoTheme.LABEL_H2);
+        brand.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        navigationBar.addComponent(brand);
+        navigationBar.setComponentAlignment(brand, Alignment.MIDDLE_LEFT);
+        navigationBar.setExpandRatio(brand, 1);
+
+
+        btnHome = createNavigationButton("Home", FontAwesome.HOME, HomeView.VIEW_NAME);
+        navigationBar.addComponent(btnHome);
+
+        btnUser = createNavigationButton("User home", FontAwesome.USER, UserHomeView.VIEW_NAME);
+        navigationBar.addComponent(btnUser);
+
+        btnAdmin = createNavigationButton("Admin home", FontAwesome.USER_MD, AdminHomeView.VIEW_NAME);
+        navigationBar.addComponent(btnAdmin);
+
+        btnAdminHidden = createNavigationButton("Admin secret", FontAwesome.EYE_SLASH, AdminSecretView.VIEW_NAME);
+        navigationBar.addComponent(btnAdminHidden);
+
+        btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
+        navigationBar.addComponent(btnSignIn);
+
+        btnSignUp = createNavigationButton("Sign up", FontAwesome.PENCIL_SQUARE_O,RegisterView.VIEW_NAME);
+        navigationBar.addComponent(btnSignUp);
+
+        btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
+        navigationBar.addComponent(btnLogout);
+
+        getNavigator().setErrorView(CustomNotFoundView.class);
+        root.addComponent(navigationBar);
+
+        panel = new Panel();
+        panel.setSizeFull();
+        root.addComponent(panel);
+        root.setExpandRatio(panel, 1.0f);
+
     }
 
-//    private Button createNavigationButton(String caption, final String viewName) {
-//        Button button = new Button(caption);
-//        button.addStyleName(ValoTheme.BUTTON_SMALL);
-//        button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
-//        return button;
-//    }
 
-//    @Override
-//    public void showView(View view) {
-//        panel.setContent((Component) view);
-//    }
+    private Button createNavigationButton(String caption, FontAwesome fontAwesome, final String viewName) {
+        Button button = new Button(caption, fontAwesome);
+        button.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+        button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
+        return button;
+    }
+
+    @Override
+    public void showView(View view) {
+        panel.setContent((Component) view);
+    }
 
 }

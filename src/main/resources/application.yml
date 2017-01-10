@@ -1,15 +1,15 @@
-spring:
-    datasource:
-        driverClassName: org.postgresql.Driver
-        password: password
-        url: jdbc:postgresql://localhost:5432/postgres
-        username: postgres
-    jpa:
-        hibernate:
-            ddl-auto: create-drop
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
+#spring:
+#    datasource:
+#        driverClassName: org.postgresql.Driver
+#        password: password
+#        url: jdbc:postgresql://localhost:5432/postgres
+#        username: postgres
+#    jpa:
+#        hibernate:
+#            ddl-auto: create-drop
+#        properties:
+#            hibernate:
+#                dialect: org.hibernate.dialect.PostgreSQLDialect
 
 #
 #security:
