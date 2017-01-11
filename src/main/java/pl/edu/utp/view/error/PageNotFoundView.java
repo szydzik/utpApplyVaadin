@@ -16,20 +16,19 @@ import javax.annotation.PostConstruct;
 @SpringComponent
 @UIScope
 //@SpringView(name = PageNotFoundView.VIEW_NAME)
-
 public class PageNotFoundView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "custom-not-found";
+    private Label label;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
+        label.setValue(String.format("No such view: %s", event.getViewName()));
     }
 
     @PostConstruct
     void init() {
         setMargin(true);
-        Label label = new Label("Nie znaleziono widoku!");
+        label = new Label();
         label.addStyleName(ValoTheme.LABEL_FAILURE);
         label.setSizeUndefined();
         addComponent(label);

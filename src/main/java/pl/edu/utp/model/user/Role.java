@@ -1,13 +1,21 @@
 package pl.edu.utp.model.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 /**
  * Created by xxbar on 10.01.2017.
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
