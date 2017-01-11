@@ -1,6 +1,4 @@
-package pl.edu.utp.model.views;
-
-import pl.edu.utp.model.Role;
+package pl.edu.utp.model.user;
 
 import javax.persistence.*;
 import java.util.Collection;

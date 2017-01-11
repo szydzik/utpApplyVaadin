@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import javax.annotation.PostConstruct;
 
@@ -23,6 +24,10 @@ public class AdminHomeView extends VerticalLayout implements View {
 
     @PostConstruct
     void init() {
-        addComponent(new Label("Widok: "+VIEW_NAME));
+        setMargin(true);
+        Label label = new Label("Admin Home View");
+        label.addStyleName(ValoTheme.LABEL_LARGE);
+        label.setSizeUndefined();
+        addComponent(label);
     }
 }

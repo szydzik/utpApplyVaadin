@@ -1,15 +1,11 @@
 package pl.edu.utp.controller.person;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.utp.model.Person;
-import pl.edu.utp.model.views.Views;
 import pl.edu.utp.repository.PersonRepository;
 
-import java.util.List;
-
-import static pl.edu.utp.utils.RestConfiguration.TRANSPORT_DATA_TYPE;
+import static pl.edu.utp.config.RestConfiguration.TRANSPORT_DATA_TYPE;
 
 /**
  * Created by Bartosz Szydzik on 17.12.2016.

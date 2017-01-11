@@ -2,19 +2,22 @@ package pl.edu.utp.view.error;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import javax.annotation.PostConstruct;
 
 /**
  * Created by xxbar on 10.01.2017.
  */
+@SpringComponent
 @UIScope
-@SpringView(name = CustomNotFoundView.VIEW_NAME)
-public class CustomNotFoundView extends VerticalLayout implements View {
+//@SpringView(name = PageNotFoundView.VIEW_NAME)
+
+public class PageNotFoundView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "custom-not-found";
 
@@ -26,7 +29,10 @@ public class CustomNotFoundView extends VerticalLayout implements View {
     @PostConstruct
     void init() {
         setMargin(true);
-        setSpacing(true);
-        addComponent(new Label("MyError: Nie znaleziono widoku."));
+        Label label = new Label("Nie znaleziono widoku!");
+        label.addStyleName(ValoTheme.LABEL_FAILURE);
+        label.setSizeUndefined();
+        addComponent(label);
     }
+
 }

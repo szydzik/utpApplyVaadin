@@ -3,10 +3,9 @@ package pl.edu.utp.controller.univeristy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.utp.model.University;
-import pl.edu.utp.repository.PersonRepository;
 import pl.edu.utp.repository.UniversityRepository;
 
-import static pl.edu.utp.utils.RestConfiguration.TRANSPORT_DATA_TYPE;
+import static pl.edu.utp.config.RestConfiguration.TRANSPORT_DATA_TYPE;
 
 /**
  * Created by Bartosz Szydzik on 06.01.2017.

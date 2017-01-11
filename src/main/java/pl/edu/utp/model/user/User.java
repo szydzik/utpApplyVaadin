@@ -1,4 +1,4 @@
-package pl.edu.utp.model;
+package pl.edu.utp.model.user;
 
 import javax.persistence.*;
 import java.util.Collection;

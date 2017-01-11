@@ -10,7 +10,7 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.edu.utp.view.*;
-import pl.edu.utp.view.error.CustomNotFoundView;
+import pl.edu.utp.view.error.PageNotFoundView;
 
 /**
  * Created by xxbar on 09.01.2017.
@@ -78,7 +78,7 @@ public class MyUI extends UI implements ViewDisplay {
         btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
         navigationBar.addComponent(btnLogout);
 
-        getNavigator().setErrorView(CustomNotFoundView.class);
+        getNavigator().setErrorView(PageNotFoundView.class);
         root.addComponent(navigationBar);
 
         panel = new Panel();

@@ -33,6 +33,16 @@ github:
   resource:
     userInfoUri: https://api.github.com/user
 
+security:
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'
+  user:
+    password: password
+
 #google:
 #  client:
 #   client_id: "413197451484-b8ira33g2d0nl9ovpb4uiganuflmtnl6.apps.googleusercontent.com"

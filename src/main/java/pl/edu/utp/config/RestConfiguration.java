@@ -1,4 +1,4 @@
-package pl.edu.utp.utils;
+package pl.edu.utp.config;
 
 /**
  * Created by Bartosz Szydzik on 07.01.2017.
