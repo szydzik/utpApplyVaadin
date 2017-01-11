@@ -31,6 +31,7 @@ public class MyUI extends UI implements ViewDisplay {
     private Button btnSignIn;
     private Button btnSignUp;
     private Button btnLogout;
+    private Button btnUsers;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -63,6 +64,9 @@ public class MyUI extends UI implements ViewDisplay {
         btnUser = createNavigationButton("User home", FontAwesome.USER, UserHomeView.VIEW_NAME);
         navigationBar.addComponent(btnUser);
 
+        btnUsers = createNavigationButton("Users", FontAwesome.USERS,PersonView.VIEW_NAME);
+        navigationBar.addComponent(btnUsers);
+
         btnAdmin = createNavigationButton("Admin home", FontAwesome.USER_MD, AdminHomeView.VIEW_NAME);
         navigationBar.addComponent(btnAdmin);
 
@@ -77,6 +81,7 @@ public class MyUI extends UI implements ViewDisplay {
 
         btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
         navigationBar.addComponent(btnLogout);
+
 
         getNavigator().setErrorView(PageNotFoundView.class);
         root.addComponent(navigationBar);
