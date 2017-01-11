@@ -1,4 +1,4 @@
-package service;
+package pl.edu.utp.service;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
