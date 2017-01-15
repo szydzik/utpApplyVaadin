@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.edu.utp.model.user.Privilege;
-import pl.edu.utp.model.user.Role;
-import pl.edu.utp.model.user.User;
+import pl.edu.utp.model.security.Privilege;
+import pl.edu.utp.model.security.Role;
+import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.security.RoleRepository;
 import pl.edu.utp.repository.security.UserRepository;
 

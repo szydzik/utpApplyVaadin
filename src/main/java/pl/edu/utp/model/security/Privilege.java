@@ -1,4 +1,4 @@
-package pl.edu.utp.model.user;
+package pl.edu.utp.model.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

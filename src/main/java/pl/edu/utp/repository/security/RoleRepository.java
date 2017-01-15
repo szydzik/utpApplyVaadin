@@ -1,7 +1,7 @@
 package pl.edu.utp.repository.security;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.edu.utp.model.user.Role;
+import pl.edu.utp.model.security.Role;
 
 /**
  * Created by xxbar on 15.01.2017.
