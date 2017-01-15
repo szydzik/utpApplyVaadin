@@ -4,7 +4,7 @@ import com.vaadin.spring.annotation.VaadinSessionScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.model.user.User;
-import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.repository.security.UserRepository;
 
 import java.security.Principal;
 

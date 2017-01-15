@@ -1,4 +1,4 @@
-package pl.edu.utp.repository;
+package pl.edu.utp.repository.security;
 
 import org.springframework.data.repository.CrudRepository;
 import pl.edu.utp.model.user.User;
@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findAll();
+    User findByEmail(String email);
 }

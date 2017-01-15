@@ -9,6 +9,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.edu.utp.access.SecurityUtils;
 import pl.edu.utp.view.*;
 import pl.edu.utp.view.error.PageNotFoundView;
 
@@ -71,6 +72,11 @@ public class MyUI extends UI implements ViewDisplay {
         navigationBar.addComponent(btnAdmin);
 
         btnAdminHidden = createNavigationButton("Admin secret", FontAwesome.EYE_SLASH, AdminSecretView.VIEW_NAME);
+        if (SecurityUtils.hasRole("ADMIN")) {
+            btnAdminHidden.setVisible(false);
+            System.out.println("DEBUG: "+SecurityUtils.hasRole("ADMIN"));
+            btnAdminHidden.setEnabled(false);
+        }
         navigationBar.addComponent(btnAdminHidden);
 
         btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
