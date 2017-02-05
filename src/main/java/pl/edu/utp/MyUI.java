@@ -15,6 +15,7 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -71,6 +72,7 @@ public class MyUI extends UI implements ViewDisplay {
     protected void init(VaadinRequest request) {
         getPage().setTitle("Vaadin and Spring Security Demo");
         showMain();
+        refreshMenu();
     }
 
 
@@ -166,11 +168,6 @@ public class MyUI extends UI implements ViewDisplay {
         return button;
     }
 
-//    @Override
-//    public void showView(View view) {
-//        panel.setContent((Component) view);
-//    }
-
     @Override
     public void showView(View view) {
         if (SecurityUtils.isLoggedIn()) {
@@ -179,33 +176,7 @@ public class MyUI extends UI implements ViewDisplay {
         } else {
             System.out.println("Not Logged in");
             panel.setContent((Component) view);
-//			panel.setContent(new SimpleLoginForm(this::login));
         }
-    }
-
-    private void showLogin() {
-        setContent(new SimpleLoginForm(this::login));
-    }
-
-    private void displayAnonymousNavbar() {
-        btnAdminHidden.setVisible(false);
-        btnLogout.setVisible(false);
-        btnSignIn.setVisible(true);
-        btnSignUp.setVisible(true);
-    }
-
-    private void displayUserNavbar() {
-        btnAdminHidden.setVisible(false);
-        btnLogout.setVisible(true);
-        btnSignIn.setVisible(false);
-        btnSignUp.setVisible(false);
-    }
-
-    private void displayAdminNavbar() {
-        btnAdminHidden.setVisible(true);
-        btnLogout.setVisible(true);
-        btnSignIn.setVisible(false);
-        btnSignUp.setVisible(false);
     }
 
     private void handleError(com.vaadin.server.ErrorEvent event) {
@@ -236,11 +207,23 @@ public class MyUI extends UI implements ViewDisplay {
             getPushConfiguration().setTransport(Transport.WEBSOCKET);
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
-//			showMain();
             this.showView(homeView);
+            refreshMenu();
             return true;
         } catch (AuthenticationException ex) {
             return false;
+        }
+    }
+
+    private void refreshMenu(){
+        if (SecurityUtils.isLoggedIn()){
+            btnSignIn.setVisible(false);
+            btnSignUp.setVisible(false);
+            btnLogout.setVisible(true);
+        }else{
+            btnSignIn.setVisible(true);
+            btnSignUp.setVisible(true);
+            btnLogout.setVisible(false);
         }
     }
 

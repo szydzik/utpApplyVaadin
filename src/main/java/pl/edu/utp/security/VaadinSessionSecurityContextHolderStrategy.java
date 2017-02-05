@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.context.SecurityContextImpl;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -19,12 +18,16 @@ import java.util.List;
  */
 public class VaadinSessionSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 
+	private final static String ANONYMOUS_USERNAME = "anonymousUser";
+	private final static String ANONYMOUS_TOKEN_KEY = "anonymousUser";
+	private final static List<GrantedAuthority> ANONYMOUS_ROLES = AuthorityUtils.createAuthorityList( "ROLE_ANONYMOUS");
+
 	@Override
 	public void clearContext() {
 		getSession().setAttribute(SecurityContext.class, null);
 	}
 
-	private final static List<GrantedAuthority> ANONYMOUS_ROLE = AuthorityUtils.createAuthorityList( "ROLE_ANONYMOUS");
+
 
 	@Override
 	public SecurityContext getContext() {
@@ -46,9 +49,8 @@ public class VaadinSessionSecurityContextHolderStrategy implements SecurityConte
 	@Override
 	public SecurityContext createEmptyContext() {
 		SecurityContext context = new SecurityContextImpl();
-		Principal anonymousUser = () -> "anonymousUser";
-		//Authentication authentication = new TestingAuthenticationToken("ANONYMOUS", "ANONYMOUS", "ROLE_ANONYMOUS");
-		Authentication authentication = new AnonymousAuthenticationToken("ROLE_ANONYMOUS", anonymousUser , ANONYMOUS_ROLE); //<-- sprawdzić jak to działą !
+//		Principal anonymousUser = () -> "anonymousUser";
+		Authentication authentication = new AnonymousAuthenticationToken(ANONYMOUS_TOKEN_KEY, ANONYMOUS_USERNAME , ANONYMOUS_ROLES);
 		authentication.setAuthenticated(false);
 		context.setAuthentication(authentication);
 		return context;
