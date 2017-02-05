@@ -14,10 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
+import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.RoleRepository;
+import pl.edu.utp.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,6 +41,9 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostConstruct
     void init() {
 
@@ -45,13 +52,7 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
         addComponent(new Label("Here you can control the access to the different views within this particular UI. Uncheck a few boxes and try to navigate to their corresponding views. " +
                 "In a real application, you would probably base the access decision on the current user's role or something similar."));
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if (role != null && role.getFunctions() != null){
-            for (Function f : role.getFunctions()){
-                allowedViews.add(f.getView());
-                if (!f.getView().equals("access")) {addComponent(createViewCheckbox(f.getCode(), f.getView()));}
-            }
-        }
+       reloadPrivileges("admin"); //TODO Hardcoded
     }
 
     private CheckBox createViewCheckbox(String caption, final String viewName) {
@@ -78,6 +79,30 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
         } else {
             return false;
         }
+    }
+
+    public void reloadPrivileges(String login){
+        System.out.println("===================================================");
+        System.out.println("===== Odświeżam uprawnienia do funkcji dla: "+login);
+        this.allowedViews.clear();
+
+        Set<Function> functions = getFunctionsByLogin(login);
+        for (Function f : functions){
+            allowedViews.add(f.getView());
+                if (!f.getView().equals("access")) {addComponent(createViewCheckbox(f.getCode(), f.getView()));}
+        }
+        System.out.println("===== Użytkownikowi przydzielono: ["+this.allowedViews.size()+" ] uprawnień.");
+        System.out.println("===================================================");
+    }
+
+    private Set<Function> getFunctionsByLogin(String login){
+        Set<Function> results = new HashSet<>();
+        List<Role> roles = userRepository.findByLogin(login).getRoles();
+        for (Role r : roles){
+            List<Function> functions = roleRepository.findByName(r.getName()).getFunctions();
+            if (functions != null) results.addAll(functions);
+        }
+        return results;
     }
 
 }

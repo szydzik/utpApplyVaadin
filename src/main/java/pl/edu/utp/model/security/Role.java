@@ -2,6 +2,7 @@ package pl.edu.utp.model.security;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -21,7 +22,7 @@ public class Role {
             name = "roles_functions",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "function_id", referencedColumnName = "id"))
-    private Collection<Function> functions;
+    private List<Function> functions;
 
     public Role() {
     }
@@ -50,11 +51,11 @@ public class Role {
         this.users = users;
     }
 
-    public Collection<Function> getFunctions() {
+    public List<Function> getFunctions() {
         return functions;
     }
 
-    public void setFunctions(Collection<Function> functions) {
+    public void setFunctions(List<Function> functions) {
         this.functions = functions;
     }
 

@@ -28,4 +28,6 @@ public final class SecurityUtils {
         System.out.println("========authentication:"+authentication);
         return authentication != null && authentication.getAuthorities().contains(new SimpleGrantedAuthority(role));
     }
+
+
 }

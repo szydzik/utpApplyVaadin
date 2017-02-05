@@ -11,7 +11,13 @@ public class Function {
     private Long id;
 
     private String code;
+    private String name;
     private String description;
+    private String functionEnum;
+    private String menuName;
+    private Boolean active;
+    private String menuGroup;
+
     private String view;
 
     @ManyToMany(mappedBy = "functions")
@@ -60,6 +66,46 @@ public class Function {
         this.roles = roles;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFunctionEnum() {
+        return functionEnum;
+    }
+
+    public void setFunctionEnum(String functionEnum) {
+        this.functionEnum = functionEnum;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getMenuGroup() {
+        return menuGroup;
+    }
+
+    public void setMenuGroup(String menuGroup) {
+        this.menuGroup = menuGroup;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,9 +136,13 @@ public class Function {
         return "Function{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", functionEnum='" + functionEnum + '\'' +
+                ", menuName='" + menuName + '\'' +
+                ", active=" + active +
+                ", menuGroup='" + menuGroup + '\'' +
                 ", view='" + view + '\'' +
-//                ", roles=" + roles +
                 '}';
     }
 }

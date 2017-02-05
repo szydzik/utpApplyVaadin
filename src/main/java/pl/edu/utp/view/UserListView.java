@@ -16,10 +16,10 @@ import pl.edu.utp.repository.PersonRepository;
 import java.util.Date;
 
 @UIScope
-@SpringView(name = PersonView.VIEW_NAME)
-public class PersonView extends CustomComponent implements View {
+@SpringView(name = UserListView.VIEW_NAME)
+public class UserListView extends CustomComponent implements View {
 
-    public static final String VIEW_NAME = "users";
+    public static final String VIEW_NAME = "user-list";
 
     private PersonRepository repo;
     private PersonEditor editor;
@@ -28,7 +28,7 @@ public class PersonView extends CustomComponent implements View {
     private Button addNewBtn;
 
     @Autowired
-    public PersonView(PersonRepository repo, PersonEditor editor) {
+    public UserListView(PersonRepository repo, PersonEditor editor) {
         this.repo = repo;
         this.editor = editor;
         this.grid = new Grid();

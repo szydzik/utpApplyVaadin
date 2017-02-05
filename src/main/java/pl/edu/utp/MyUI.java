@@ -1,6 +1,5 @@
 package pl.edu.utp;
 
-import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
@@ -15,7 +14,6 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +23,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.form.SimpleLoginForm;
 import pl.edu.utp.security.SecurityUtils;
+import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.view.*;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
@@ -49,6 +48,9 @@ public class MyUI extends UI implements ViewDisplay {
 
     @Autowired
     HomeView homeView;
+
+    @Autowired
+    UserSessionBean userSessionBean;
 
     private Panel panel;
 
@@ -108,7 +110,7 @@ public class MyUI extends UI implements ViewDisplay {
         btnUser = createNavigationButton("User home", FontAwesome.USER, UserHomeView.VIEW_NAME);
         navigationBar.addComponent(btnUser);
 
-        btnUsers = createNavigationButton("Users", FontAwesome.USERS, PersonView.VIEW_NAME);
+        btnUsers = createNavigationButton("Users", FontAwesome.USERS, UserListView.VIEW_NAME);
         navigationBar.addComponent(btnUsers);
 
         btnAdmin = createNavigationButton("Admin home", FontAwesome.USER_MD, AdminHomeView.VIEW_NAME);
