@@ -1,28 +1,25 @@
 package pl.edu.utp;
 
-import com.vaadin.spring.annotation.VaadinSessionScope;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import pl.edu.utp.model.user.User;
-import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.model.security.User;
 
 import java.security.Principal;
 
 /**
  * Created by xxbar on 11.01.2017.
  */
-@VaadinSessionScope
+//@VaadinSessionScope
 public class UserSessionBean {
 
     String userLogin = "test";
 
     private User currentUser;
 
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+//    UserRepository userRepository;
 
     public UserSessionBean() {
-        getUserName();
+//        getUserName();
     }
 
     boolean isCurrentUser(){

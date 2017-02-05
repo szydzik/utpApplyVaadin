@@ -1,25 +1,53 @@
 package pl.edu.utp;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
+import com.vaadin.shared.communication.PushMode;
+import com.vaadin.shared.ui.ui.Transport;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import pl.edu.utp.form.SimpleLoginForm;
+import pl.edu.utp.security.SecurityUtils;
 import pl.edu.utp.view.*;
+import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
 
 /**
  * Created by xxbar on 09.01.2017.
  */
-@Theme("valo")
+@Theme(ValoTheme.THEME_NAME)
 @SpringUI
+//@Push(transport = Transport.WEBSOCKET_XHR) // Websocket would bypass the filter chain, Websocket+XHR works
 @SpringViewDisplay
 public class MyUI extends UI implements ViewDisplay {
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    PageNotFoundView pageNotFoundView;
+
+    @Autowired
+    SpringViewProvider viewProvider;
+
+    @Autowired
+    HomeView homeView;
 
     private Panel panel;
 
@@ -28,28 +56,42 @@ public class MyUI extends UI implements ViewDisplay {
     private Button btnUser;
     private Button btnAdmin;
     private Button btnAdminHidden;
+    private Button btnAccessControl;
     private Button btnSignIn;
     private Button btnSignUp;
     private Button btnLogout;
     private Button btnUsers;
 
+    public MyUI() {
+        this.panel = new Panel();
+    }
+
+
     @Override
     protected void init(VaadinRequest request) {
+        getPage().setTitle("Vaadin and Spring Security Demo");
+        showMain();
+    }
+
+
+    private void showMain() {
 
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
-        root.setMargin(false);
+        root.setMargin(true);
         root.setSpacing(true);
         setContent(root);
 
 
-        //-------nav-------
+//        -------nav-------
 //        final CssLayout navigationBar = new CssLayout();
         final HorizontalLayout navigationBar = new HorizontalLayout();
         navigationBar.setWidth("100%");
         navigationBar.setMargin(true);
+        navigationBar.setSpacing(true);
         navigationBar.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
-//        navigationBar.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+
+//        -----logo----
         final Label brand = new Label("utpAPPLY");
         brand.addStyleName(ValoTheme.LABEL_H2);
         brand.addStyleName(ValoTheme.LABEL_NO_MARGIN);
@@ -57,7 +99,7 @@ public class MyUI extends UI implements ViewDisplay {
         navigationBar.setComponentAlignment(brand, Alignment.MIDDLE_LEFT);
         navigationBar.setExpandRatio(brand, 1);
 
-
+//        -----add buttons-----
         btnHome = createNavigationButton("Home", FontAwesome.HOME, HomeView.VIEW_NAME);
         navigationBar.addComponent(btnHome);
 
@@ -73,22 +115,46 @@ public class MyUI extends UI implements ViewDisplay {
         btnAdminHidden = createNavigationButton("Admin secret", FontAwesome.EYE_SLASH, AdminSecretView.VIEW_NAME);
         navigationBar.addComponent(btnAdminHidden);
 
-        btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
+        btnAccessControl = createNavigationButton("Admin Control", FontAwesome.EYE_SLASH, AccessControlView.VIEW_NAME);
+        navigationBar.addComponent(btnAccessControl);
+
+//        btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
+//        navigationBar.addComponent(btnSignIn);
+        btnSignIn = new Button("Sign In", evt -> {
+            panel.setContent(new SimpleLoginForm(this::login));
+        });
+        btnSignIn.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+        btnSignIn.setIcon(FontAwesome.SIGN_IN);
         navigationBar.addComponent(btnSignIn);
 
         btnSignUp = createNavigationButton("Sign up", FontAwesome.PENCIL_SQUARE_O,RegisterView.VIEW_NAME);
         navigationBar.addComponent(btnSignUp);
 
-        btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
+//        btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
+//        navigationBar.addComponent(btnLogout);
+
+        btnLogout = new Button("Logout", event -> {
+            // Let Spring Security handle the logout by redirecting to the logout URL
+//			getPage().setLocation("logout");
+            this.logout();
+        });
+        btnLogout.addStyleName(ValoTheme.BUTTON_BORDERLESS);
         navigationBar.addComponent(btnLogout);
 
-        getNavigator().setErrorView(PageNotFoundView.class);
+
+//        getNavigator().setErrorView(PageNotFoundView.class);
         root.addComponent(navigationBar);
 
         panel = new Panel();
         panel.setSizeFull();
         root.addComponent(panel);
         root.setExpandRatio(panel, 1.0f);
+
+        setContent(root);
+        setErrorHandler(this::handleError);
+        getNavigator().setErrorView(pageNotFoundView);
+        viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
+        getNavigator().addProvider(viewProvider);
 
     }
 
@@ -100,9 +166,25 @@ public class MyUI extends UI implements ViewDisplay {
         return button;
     }
 
+//    @Override
+//    public void showView(View view) {
+//        panel.setContent((Component) view);
+//    }
+
     @Override
     public void showView(View view) {
-        panel.setContent((Component) view);
+        if (SecurityUtils.isLoggedIn()) {
+            System.out.println("Logged in");
+            panel.setContent((Component) view);
+        } else {
+            System.out.println("Not Logged in");
+            panel.setContent((Component) view);
+//			panel.setContent(new SimpleLoginForm(this::login));
+        }
+    }
+
+    private void showLogin() {
+        setContent(new SimpleLoginForm(this::login));
     }
 
     private void displayAnonymousNavbar() {
@@ -124,6 +206,42 @@ public class MyUI extends UI implements ViewDisplay {
         btnLogout.setVisible(true);
         btnSignIn.setVisible(false);
         btnSignUp.setVisible(false);
+    }
+
+    private void handleError(com.vaadin.server.ErrorEvent event) {
+        Throwable t = DefaultErrorHandler.findRelevantThrowable(event.getThrowable());
+        if (t instanceof AccessDeniedException) {
+            Notification.show("You do not have permission to perform this operation",
+                    Notification.Type.WARNING_MESSAGE);
+        } else {
+            DefaultErrorHandler.doDefault(event);
+        }
+    }
+
+    private void logout() {
+        getPage().reload();
+        getSession().close();
+    }
+
+    private boolean login(String username, String password) {
+        try {
+            Authentication token = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            // Reinitialize the session to protect against session fixation attacks. This does not work
+            // with websocket communication.
+            VaadinService.reinitializeSession(VaadinService.getCurrentRequest());
+            SecurityContextHolder.getContext().setAuthentication(token);
+            // Now when the session is reinitialized, we can enable websocket communication. Or we could have just
+            // used WEBSOCKET_XHR and skipped this step completely.
+            getPushConfiguration().setTransport(Transport.WEBSOCKET);
+            getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
+            // Show the main UI
+//			showMain();
+            this.showView(homeView);
+            return true;
+        } catch (AuthenticationException ex) {
+            return false;
+        }
     }
 
 }

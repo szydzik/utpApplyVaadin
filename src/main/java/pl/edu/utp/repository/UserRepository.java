@@ -1,7 +1,7 @@
 package pl.edu.utp.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.edu.utp.model.user.User;
+import pl.edu.utp.model.security.User;
 
 import java.util.List;
 
