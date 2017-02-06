@@ -10,10 +10,13 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import pl.edu.utp.model.Person;
-import pl.edu.utp.repository.PersonRepository;
+import pl.edu.utp.model.security.Role;
+import pl.edu.utp.model.security.User;
+import pl.edu.utp.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @UIScope
 @SpringView(name = UserListView.VIEW_NAME)
@@ -21,14 +24,14 @@ public class UserListView extends CustomComponent implements View {
 
     public static final String VIEW_NAME = "user-list";
 
-    private PersonRepository repo;
-    private PersonEditor editor;
+    private UserRepository repo;
+    private UserEditor editor;
     private Grid grid;
     private TextField filter;
     private Button addNewBtn;
 
     @Autowired
-    public UserListView(PersonRepository repo, PersonEditor editor) {
+    public UserListView(UserRepository repo, UserEditor editor) {
         this.repo = repo;
         this.editor = editor;
         this.grid = new Grid();
@@ -36,20 +39,20 @@ public class UserListView extends CustomComponent implements View {
         this.addNewBtn = new Button("New user", FontAwesome.PLUS);
 
         grid.setHeight(300, Unit.PIXELS);
-        grid.setColumns("id", "name", "surname", "age", "dateOfBirth");
+        grid.setColumns("id", "name", "surname", "login");
 
-        filter.setInputPrompt("Filter by last name");
+        filter.setInputPrompt("Filter by surname");
         filter.addTextChangeListener(e -> listUsers(e.getText()));
         grid.addSelectionListener(e -> {
             if (e.getSelected().isEmpty()) {
                 editor.setVisible(false);
             }
             else {
-                editor.editCustomer((Person) grid.getSelectedRow());
+                editor.editUser((User) grid.getSelectedRow());
             }
         });
 
-        addNewBtn.addClickListener(e -> editor.editCustomer(new Person("", "", 1, new Date())));
+        addNewBtn.addClickListener(e -> editor.editUser(new User("","","","", new ArrayList<Role>())));
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
@@ -74,13 +77,16 @@ public class UserListView extends CustomComponent implements View {
     }
 
     void listUsers(String text) {
+        List<User> list = repo.findAll();
+        list.forEach(System.out::println);
+
         if (StringUtils.isEmpty(text)) {
             grid.setContainerDataSource(
-                    new BeanItemContainer(Person.class, repo.findAll()));
+                    new BeanItemContainer(User.class, repo.findAll()));
         }
         else {
-            grid.setContainerDataSource(new BeanItemContainer(Person.class,
-                    repo.findBySurnameStartsWithIgnoreCase(text)
+            grid.setContainerDataSource(
+                    new BeanItemContainer(User.class, repo.findBySurnameStartsWithIgnoreCase(text)
             ));
         }
     }

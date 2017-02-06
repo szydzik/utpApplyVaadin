@@ -37,11 +37,11 @@ INSERT INTO public.roles_functions(role_id, function_id) VALUES (103, 103);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (103, 104);
 
 -- user - ROLE_ADMIN
-INSERT INTO public.app_user(id, first_name, last_name, login, password) VALUES (101, 'Admin', 'Admin', 'admin', 'p');
+INSERT INTO public.app_user(id, name, surname, login, password) VALUES (101, 'Admin', 'Admin', 'admin', 'p');
 INSERT INTO public.users_roles(user_id, role_id) VALUES (101, 101);
 
 -- user - ROLE_USER
-INSERT INTO public.app_user(id, first_name, last_name, login, password) VALUES (102, 'Aser', 'Aser', 'user', 'p');
+INSERT INTO public.app_user(id, name, surname, login, password) VALUES (102, 'User', 'User', 'user', 'p');
 INSERT INTO public.users_roles(user_id, role_id) VALUES (102, 102);
 
 

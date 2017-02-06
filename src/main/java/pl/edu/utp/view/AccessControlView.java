@@ -83,15 +83,21 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
 
     public void reloadPrivileges(String login){
         System.out.println("===================================================");
-        System.out.println("===== Odświeżam uprawnienia do funkcji dla: "+login);
-        this.allowedViews.clear();
 
-        Set<Function> functions = getFunctionsByLogin(login);
+        this.allowedViews.clear();
+        Set<Function> functions = null;
+        if (login != null && !login.equals("anonymousUser") && !login.isEmpty()) {
+            System.out.println("===== Odświeżam uprawnienia do funkcji dla: "+login);
+            functions = getFunctionsByLogin(login);
+        }else{
+            System.out.println("===== Odświeżam uprawnienia do funkcji dla anonimowego użytkownika: "+login);
+            functions = getFunctionsForAnonymousUser();
+        }
         for (Function f : functions){
             allowedViews.add(f.getView());
                 if (!f.getView().equals("access")) {addComponent(createViewCheckbox(f.getCode(), f.getView()));}
         }
-        System.out.println("===== Użytkownikowi przydzielono: ["+this.allowedViews.size()+" ] uprawnień.");
+        System.out.println("===== Użytkownikowi przydzielono: [ "+this.allowedViews.size()+" ] uprawnień.");
         System.out.println("===================================================");
     }
 
@@ -102,6 +108,13 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
             List<Function> functions = roleRepository.findByName(r.getName()).getFunctions();
             if (functions != null) results.addAll(functions);
         }
+        return results;
+    }
+
+    private Set<Function> getFunctionsForAnonymousUser(){
+        Set<Function> results = new HashSet<>();
+        Role role = roleRepository.findByName("ROLE_ANONYMOUS");
+        results.addAll(role.getFunctions());
         return results;
     }
 
