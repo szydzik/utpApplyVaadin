@@ -15,7 +15,6 @@ import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @UIScope

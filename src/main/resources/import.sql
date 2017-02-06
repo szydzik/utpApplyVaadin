@@ -44,5 +44,9 @@ INSERT INTO public.users_roles(user_id, role_id) VALUES (101, 101);
 INSERT INTO public.app_user(id, name, surname, login, password) VALUES (102, 'User', 'User', 'user', 'p');
 INSERT INTO public.users_roles(user_id, role_id) VALUES (102, 102);
 
+-- user - ROLE_USER
+INSERT INTO public.app_user(id, name, surname, login, password) VALUES (103, 'anonymousUser', 'anonymousUser', 'anonymousUser', '');
+INSERT INTO public.users_roles(user_id, role_id) VALUES (103, 103);
+
 
 

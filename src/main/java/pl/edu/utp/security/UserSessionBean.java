@@ -3,15 +3,18 @@ package pl.edu.utp.security;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.security.core.userdetails.UserDetails;
+import pl.edu.utp.model.security.Function;
+import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
-import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by xxbar on 11.01.2017.
@@ -19,8 +22,6 @@ import java.security.Principal;
 @SpringComponent
 @VaadinSessionScope
 public class UserSessionBean {
-
-    String userLogin = "test";
 
     private User currentUser;
 
@@ -36,7 +37,6 @@ public class UserSessionBean {
     }
 
     public UserSessionBean() {
-//        getUserName();
     }
 
     boolean isCurrentUser(){
@@ -48,14 +48,38 @@ public class UserSessionBean {
      *
      * @return
      */
-//    public String getUserName() {
-//        String name = userLogin;
-//        Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        System.out.println("=====Principal: "+principal.getName());
-//        if (principal != null){
-//            return principal.getName();
-//        }
-//        return name;
-//    }
+    public void refreshUserFromContext() {
+        String username;
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        username = ((UserDetails) o).getUsername();
+        if (username != null){
+            User u = userRepository.findByLogin(username);
+            setCurrentUser(u);
+        }
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public List<Role> getUserRole(){
+        return isCurrentUser() ? getCurrentUser().getRoles() : new ArrayList<>();
+    }
+
+    public Set<Function> getUserFunctions(){
+        if (isCurrentUser()){
+            Set<Function> set = new HashSet<>();
+            getCurrentUser().getRoles().stream().forEach(r->{
+                r.getFunctions().stream().forEach(f -> set.add(f));
+            });
+            return set;
+        }else{
+            return new HashSet<>();
+        }
+    }
 
 }

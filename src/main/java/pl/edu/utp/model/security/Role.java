@@ -1,12 +1,14 @@
 package pl.edu.utp.model.security;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
 
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -89,5 +91,10 @@ public class Role {
 //                ", users=" + users +
                 ", functions=" + functions +
                 '}';
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.getName();
     }
 }

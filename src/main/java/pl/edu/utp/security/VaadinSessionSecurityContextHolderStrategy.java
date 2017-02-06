@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.context.SecurityContextImpl;
+import pl.edu.utp.model.security.AnonymousUser;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class VaadinSessionSecurityContextHolderStrategy implements SecurityConte
 	@Override
 	public SecurityContext createEmptyContext() {
 		SecurityContext context = new SecurityContextImpl();
-//		Principal anonymousUser = () -> "anonymousUser";
-		Authentication authentication = new AnonymousAuthenticationToken(ANONYMOUS_TOKEN_KEY, ANONYMOUS_USERNAME , ANONYMOUS_ROLES);
+		AnonymousUser anonymousUser = new AnonymousUser();
+		Authentication authentication = new AnonymousAuthenticationToken(ANONYMOUS_TOKEN_KEY, anonymousUser , ANONYMOUS_ROLES);
 		authentication.setAuthenticated(false);
 		context.setAuthentication(authentication);
 		return context;

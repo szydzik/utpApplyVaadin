@@ -64,6 +64,7 @@ public class MyUI extends UI implements ViewDisplay {
     private Button btnSignUp;
     private Button btnLogout;
     private Button btnUsers;
+    private Button btnTest;
 
     public MyUI() {
         this.panel = new Panel();
@@ -75,6 +76,7 @@ public class MyUI extends UI implements ViewDisplay {
         getPage().setTitle("Vaadin and Spring Security Demo");
         showMain();
         refreshMenu();
+        userSessionBean.refreshUserFromContext();
     }
 
 
@@ -104,6 +106,12 @@ public class MyUI extends UI implements ViewDisplay {
         navigationBar.setExpandRatio(brand, 1);
 
 //        -----add buttons-----
+        btnTest = new Button("Test button", evt -> {
+            System.out.println("==========TEST current login: " + userSessionBean.getCurrentUser().getLogin());
+//            userSessionBean.refreshUserFromContext();
+        });
+        navigationBar.addComponent(btnTest);
+
         btnHome = createNavigationButton("Home", FontAwesome.HOME, HomeView.VIEW_NAME);
         navigationBar.addComponent(btnHome);
 
@@ -210,6 +218,7 @@ public class MyUI extends UI implements ViewDisplay {
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
             this.showView(homeView);
+            userSessionBean.refreshUserFromContext();
             refreshMenu();
             return true;
         } catch (AuthenticationException ex) {
