@@ -11,7 +11,7 @@ public final class SecurityUtils {
 
     public static boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("========== Authentication:"+authentication);
+//        System.out.println("========== Authentication:"+authentication);
         if(authentication != null) {
             return authentication.isAuthenticated();
         }else {

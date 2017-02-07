@@ -1,8 +1,12 @@
 package pl.edu.utp.security;
 
+import com.vaadin.spring.access.ViewAccessControl;
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.repository.RoleRepository;
@@ -16,19 +20,24 @@ import java.util.*;
  */
 @SpringComponent
 @VaadinSessionScope
-public class PriviledgesComponent {
+public class PriviledgesComponent implements ViewAccessControl {
 
     private List<String> availableFunctions = new ArrayList<>();
+//    private List<FunctionCodeEnum> functionCodeEnums = new ArrayList<>();
+    private Set<String> allowedViews = new HashSet<>();
 
     @Autowired
-    UserRepository userRepository;
+    private ApplicationContext applicationContext;
 
     @Autowired
-    RoleRepository roleRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @PostConstruct
     private void postConstruct(){
-        reload("admin");
+//        reload("admin");
     }
 
     public void reload(String userLogin) {
@@ -43,10 +52,16 @@ public class PriviledgesComponent {
             functions = getFunctionsForAnonymousUser();
         }
         for (Function f : functions){
-            availableFunctions.add(f.getCode());
+            availableFunctions.add(f.getFunctionEnum());
+        }
+        for (String s : availableFunctions){
+            if (s != null) {
+                allowedViews.add(FunctionCodeEnum.valueOf(s).getView());
+            }
         }
         System.out.println("====== Użytkownikowi przydzielono: [ "+this.availableFunctions.size()+" ] uprawnień.");
         availableFunctions.forEach(System.out::println);
+        System.out.println("===== Przydzielam widoki");
         System.out.println("===============================================================================");
 
     }
@@ -80,4 +95,13 @@ public class PriviledgesComponent {
         return availableFunctions.contains(functionCodeName);
     }
 
+    @Override
+    public boolean isAccessGranted(UI ui, String beanName) {
+        final SpringView annotation = applicationContext.findAnnotationOnBean(beanName, SpringView.class);
+        if (annotation != null) {
+            return allowedViews.contains(annotation.name());
+        } else {
+            return false;
+        }
+    }
 }

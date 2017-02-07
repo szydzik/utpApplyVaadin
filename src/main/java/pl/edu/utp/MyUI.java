@@ -63,7 +63,7 @@ public class MyUI extends UI implements ViewDisplay {
     private Button btnUser;
     private Button btnAdmin;
     private Button btnAdminHidden;
-    private Button btnAccessControl;
+//    private Button btnAccessControl;
     private Button btnSignIn;
     private Button btnSignUp;
     private Button btnLogout;
@@ -80,7 +80,7 @@ public class MyUI extends UI implements ViewDisplay {
         getPage().setTitle("Vaadin and Spring Security Demo");
         showMain();
         refreshMenu();
-        userSessionComponent.refreshUserFromContext();
+//        refreshPriviledges();
     }
 
 
@@ -131,8 +131,8 @@ public class MyUI extends UI implements ViewDisplay {
         btnAdminHidden = createNavigationButton("Admin secret", FontAwesome.EYE_SLASH, AdminSecretView.VIEW_NAME);
         navigationBar.addComponent(btnAdminHidden);
 
-        btnAccessControl = createNavigationButton("Admin Control", FontAwesome.EYE_SLASH, AccessControlView.VIEW_NAME);
-        navigationBar.addComponent(btnAccessControl);
+//        btnAccessControl = createNavigationButton("Admin Control", FontAwesome.EYE_SLASH, AccessControlView.VIEW_NAME);
+//        navigationBar.addComponent(btnAccessControl);
 
 //        btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
 //        navigationBar.addComponent(btnSignIn);
@@ -185,10 +185,10 @@ public class MyUI extends UI implements ViewDisplay {
     @Override
     public void showView(View view) {
         if (SecurityUtils.isLoggedIn()) {
-            System.out.println("Logged in");
+//            System.out.println("Logged in");
             panel.setContent((Component) view);
         } else {
-            System.out.println("Not Logged in");
+//            System.out.println("Not Logged in");
             panel.setContent((Component) view);
         }
     }
@@ -222,7 +222,7 @@ public class MyUI extends UI implements ViewDisplay {
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
             this.showView(homeView);
-            userSessionComponent.refreshUserFromContext();
+            refreshPriviledges();
             refreshMenu();
             return true;
         } catch (AuthenticationException ex) {
@@ -240,6 +240,10 @@ public class MyUI extends UI implements ViewDisplay {
             btnSignUp.setVisible(true);
             btnLogout.setVisible(false);
         }
+    }
+
+    private void refreshPriviledges(){
+        userSessionComponent.refreshUserFromContext();
     }
 
 }

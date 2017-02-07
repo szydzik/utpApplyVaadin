@@ -35,7 +35,9 @@ public class FunctionCacheComponent {
             if (null != function.getFunctionEnum()) {
                 functionsCache.put(getFunctionCode(function.getFunctionEnum()), function);
             }else{
-                System.out.println("===== ERROR: Funkcja "+ function.getCode() +" nie posiada enuma!!!");
+//            TODO dodać własny wyjątek
+//                System.out.println("===== ERROR: Funkcja "+ function.getCode() +" nie posiada nazwy enuma!!!");
+                throw new UnsupportedOperationException("===== ERROR: Funkcja "+ function.getCode() +" nie posiada nazwy enuma!!!");
             }
         }
         System.out.println("=====  Załadowano cache, SIZE: "+functionsCache.size());

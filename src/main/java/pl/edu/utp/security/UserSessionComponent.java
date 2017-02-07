@@ -9,7 +9,6 @@ import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
-import pl.edu.utp.view.AccessControlView;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -33,10 +32,12 @@ public class UserSessionComponent {
     FunctionCacheComponent functionCacheComponent;
 
     @Autowired
-    AccessControlView accessControlView;
+    PriviledgesComponent priviledgesComponent;
+
 
     @PostConstruct
     private void postConstruct(){
+        refreshUserFromContext();
 
     }
 
@@ -47,15 +48,21 @@ public class UserSessionComponent {
         return currentUser != null;
     }
 
+    /**
+     * Pobieranie loginu użytkownika z sesji i ładowanie użytkownika z bazy danych
+     *
+     */
     public void refreshUserFromContext() {
-        String username;
-        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        username = ((UserDetails) o).getUsername();
-        if (username != null){
-            User u = userRepository.findByLogin(username);
-            setCurrentUser(u);
-            accessControlView.reloadPrivileges(username);
-        }
+        System.out.println("-----------------------------------");
+        String username = getUserName();
+        System.out.println("User from session: "+username);
+
+        currentUser = getUser(username);
+        System.out.println("User from db: "+currentUser);
+        System.out.println("-----------------------------------");
+
+        //przeładowanie uprawnień
+        priviledgesComponent.reload(currentUser.getLogin());
     }
 
     public User getCurrentUser() {
@@ -80,6 +87,51 @@ public class UserSessionComponent {
         }else{
             return new HashSet<>();
         }
+    }
+
+    /**
+     * Pobieranie loginu użytkownika.
+     *
+     * @return
+     */
+    public String getUserName() {
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userLogin = ((UserDetails) o).getUsername();
+        return userLogin;
+    }
+
+    /**
+     * Pobieranie użytkownika.
+     *
+     * @return
+     */
+    public User getUser(String username) {
+        if (username != null && !username.isEmpty()){
+            return userRepository.findByLogin(username);
+        }
+        return null;
+    }
+
+    /**
+     * Pobieranie bieżących ról użytkownika.
+     *
+     * @return
+     */
+    public List<Role> getCurrentRoles() {
+        return currentUser != null ? currentUser.getRoles() : new ArrayList<>();
+    }
+
+    /**
+     * Pobieranie bieżących ról użytkownika.
+     *
+     * @return
+     */
+    public List<String> getCurrentRolesString() {
+        List<String> result = new ArrayList<>();
+        for (Role role : getCurrentRoles()) {
+            result.add(role.getName());
+        }
+        return result;
     }
 
 }

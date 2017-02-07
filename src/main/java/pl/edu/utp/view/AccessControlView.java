@@ -3,12 +3,8 @@ package pl.edu.utp.view;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.spring.access.ViewAccessControl;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,9 +21,9 @@ import java.util.Set;
 /**
  * This demonstrates how you can control access to views.
  */
-@VaadinSessionScope
-@SpringView(name = AccessControlView.VIEW_NAME)
-public class AccessControlView extends VerticalLayout implements View, ViewAccessControl {
+//@VaadinSessionScope
+//@SpringView(name = AccessControlView.VIEW_NAME)
+public class AccessControlView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "access";
 
@@ -53,6 +49,11 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
 //       reloadPrivileges("admin"); //TODO Hardcoded
     }
 
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    }
+
+
     private CheckBox createViewCheckbox(String caption, final String viewName) {
         final CheckBox checkBox = new CheckBox(caption, true);
         checkBox.addValueChangeListener((Property.ValueChangeListener) event -> {
@@ -65,19 +66,15 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
         return checkBox;
     }
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-    }
-
-    @Override
-    public boolean isAccessGranted(UI ui, String beanName) {
-        final SpringView annotation = applicationContext.findAnnotationOnBean(beanName, SpringView.class);
-        if (annotation != null) {
-            return allowedViews.contains(annotation.name());
-        } else {
-            return false;
-        }
-    }
+//    @Override
+//    public boolean isAccessGranted(UI ui, String beanName) {
+//        final SpringView annotation = applicationContext.findAnnotationOnBean(beanName, SpringView.class);
+//        if (annotation != null) {
+//            return allowedViews.contains(annotation.name());
+//        } else {
+//            return false;
+//        }
+//    }
 
     public void reloadPrivileges(String login){
         System.out.println("===================================================");

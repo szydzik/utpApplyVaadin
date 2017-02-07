@@ -6,6 +6,8 @@ package pl.edu.utp.security;
 public enum FunctionCodeEnum {
 
     HOME("", ViewMode.NONE, MenuGroup.HOME),
+    USER_HOME("user-home", ViewMode.NONE, MenuGroup.USER),
+
 
     USER("user-list", ViewMode.LIST, MenuGroup.ADMIN),
     USER_DETAILS("user-details", ViewMode.DETAILS, MenuGroup.ADMIN),
@@ -40,5 +42,17 @@ public enum FunctionCodeEnum {
         this.view = view;
         this.viewMode = null;
         this.menuGroup = null;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public ViewMode getViewMode() {
+        return viewMode;
+    }
+
+    public MenuGroup getMenuGroup() {
+        return menuGroup;
     }
 }

@@ -7,8 +7,10 @@ INSERT INTO public.function(id, active, code, description, function_enum, menu_g
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Home', 'Home', '');
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register', 'register');
 -- INSERT INTO public.function(id, code, description, view) VALUES (104, 'REGISTER_VIEW', null, 'register');
-INSERT INTO public.function(id, code, description, view) VALUES (105, 'USER_HOME_VIEW', null, 'user-home');
-INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
+
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'User Home', 'user-home');
+
+-- INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (107, true, 'USER', null, 'USER', 'Administracja', 'Lista użytkowników', 'Lista użytkowników', 'user-list');
 
 
@@ -21,7 +23,7 @@ INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 102);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 103);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 104);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 105);
-INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 106);
+-- INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 106);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 107);
 
 -- ROLE_USER
