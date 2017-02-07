@@ -22,8 +22,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.form.SimpleLoginForm;
+import pl.edu.utp.security.PriviledgesComponent;
 import pl.edu.utp.security.SecurityUtils;
-import pl.edu.utp.security.UserSessionBean;
+import pl.edu.utp.security.UserSessionComponent;
 import pl.edu.utp.view.*;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
@@ -50,7 +51,10 @@ public class MyUI extends UI implements ViewDisplay {
     HomeView homeView;
 
     @Autowired
-    UserSessionBean userSessionBean;
+    UserSessionComponent userSessionComponent;
+
+    @Autowired
+    PriviledgesComponent priviledgesComponent;
 
     private Panel panel;
 
@@ -76,7 +80,7 @@ public class MyUI extends UI implements ViewDisplay {
         getPage().setTitle("Vaadin and Spring Security Demo");
         showMain();
         refreshMenu();
-        userSessionBean.refreshUserFromContext();
+        userSessionComponent.refreshUserFromContext();
     }
 
 
@@ -107,7 +111,7 @@ public class MyUI extends UI implements ViewDisplay {
 
 //        -----add buttons-----
         btnTest = new Button("Test button", evt -> {
-            System.out.println("==========TEST current login: " + userSessionBean.getCurrentUser().getLogin());
+            System.out.println("==========TEST current login: " + userSessionComponent.getCurrentUser().getLogin());
 //            userSessionBean.refreshUserFromContext();
         });
         navigationBar.addComponent(btnTest);
@@ -218,7 +222,7 @@ public class MyUI extends UI implements ViewDisplay {
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
             this.showView(homeView);
-            userSessionBean.refreshUserFromContext();
+            userSessionComponent.refreshUserFromContext();
             refreshMenu();
             return true;
         } catch (AuthenticationException ex) {

@@ -14,12 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
-import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.RoleRepository;
 import pl.edu.utp.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +50,7 @@ public class AccessControlView extends VerticalLayout implements View, ViewAcces
         addComponent(new Label("Here you can control the access to the different views within this particular UI. Uncheck a few boxes and try to navigate to their corresponding views. " +
                 "In a real application, you would probably base the access decision on the current user's role or something similar."));
 
-       reloadPrivileges("admin"); //TODO Hardcoded
+//       reloadPrivileges("admin"); //TODO Hardcoded
     }
 
     private CheckBox createViewCheckbox(String caption, final String viewName) {

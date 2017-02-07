@@ -9,6 +9,7 @@ import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.view.AccessControlView;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by xxbar on 11.01.2017.
+ * Created by szydzik on 11.01.2017.
  */
 @SpringComponent
 @VaadinSessionScope
-public class UserSessionBean {
+public class UserSessionComponent {
 
     private User currentUser;
 
@@ -29,25 +30,23 @@ public class UserSessionBean {
     UserRepository userRepository;
 
     @Autowired
-    FunctionCacheBean functionCacheBean;
+    FunctionCacheComponent functionCacheComponent;
+
+    @Autowired
+    AccessControlView accessControlView;
 
     @PostConstruct
     private void postConstruct(){
 
     }
 
-    public UserSessionBean() {
+    public UserSessionComponent() {
     }
 
     boolean isCurrentUser(){
         return currentUser != null;
     }
 
-    /**
-     * Pobieranie loginu użytkownika.
-     *
-     * @return
-     */
     public void refreshUserFromContext() {
         String username;
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -55,6 +54,7 @@ public class UserSessionBean {
         if (username != null){
             User u = userRepository.findByLogin(username);
             setCurrentUser(u);
+            accessControlView.reloadPrivileges(username);
         }
     }
 
