@@ -18,8 +18,6 @@ public class Function {
     private Boolean active;
     private String menuGroup;
 
-    private String view;
-
     @ManyToMany(mappedBy = "functions")
     private Collection<Role> roles;
 
@@ -48,14 +46,6 @@ public class Function {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
     }
 
     public Collection<Role> getRoles() {
@@ -117,7 +107,6 @@ public class Function {
         if (!getCode().equals(function.getCode())) return false;
         if (getDescription() != null ? !getDescription().equals(function.getDescription()) : function.getDescription() != null)
             return false;
-        if (!getView().equals(function.getView())) return false;
         return getRoles() != null ? getRoles().equals(function.getRoles()) : function.getRoles() == null;
     }
 
@@ -126,7 +115,6 @@ public class Function {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + getCode().hashCode();
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getView().hashCode();
         result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
         return result;
     }
@@ -142,7 +130,6 @@ public class Function {
                 ", menuName='" + menuName + '\'' +
                 ", active=" + active +
                 ", menuGroup='" + menuGroup + '\'' +
-                ", view='" + view + '\'' +
                 '}';
     }
 }

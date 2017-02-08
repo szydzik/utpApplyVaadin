@@ -15,11 +15,11 @@ public enum FunctionCodeEnum {
     USER_CREATE("user-create", ViewMode.CREATE, MenuGroup.ADMIN),
     USER_DELETE("user-delete", ViewMode.DELETE, MenuGroup.ADMIN),
 
-    REGISTER("register", ViewMode.NONE, MenuGroup.SIGN_UP),
-
     ADMIN_HOME("admin-home", ViewMode.NONE, MenuGroup.ADMIN),
     ADMIN_SECRET("admin-secret", ViewMode.NONE, MenuGroup.ADMIN),
 
+
+    REGISTER("register", ViewMode.NONE, MenuGroup.SIGN_UP),
     SIGN_IN("login"),
     UNKNOWN("unkown")
     ;
@@ -29,21 +29,21 @@ public enum FunctionCodeEnum {
     private final ViewMode viewMode;
     private final MenuGroup menuGroup;
 
-    private FunctionCodeEnum() {
-        view = null;
-        viewMode = null;
-        menuGroup = null;
-    }
-
     FunctionCodeEnum(String view, ViewMode viewMode, MenuGroup menuGroup) {
         this.view = view;
         this.viewMode = viewMode;
         this.menuGroup = menuGroup;
     }
 
-    private FunctionCodeEnum(String view) {
+    FunctionCodeEnum(String view) {
         this.view = view;
         this.viewMode = null;
+        this.menuGroup = null;
+    }
+
+    FunctionCodeEnum(String view, ViewMode viewMode) {
+        this.view = view;
+        this.viewMode = viewMode;
         this.menuGroup = null;
     }
 

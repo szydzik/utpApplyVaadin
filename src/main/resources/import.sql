@@ -2,16 +2,16 @@
 -- INSERT INTO public.function(id, code, description, view) VALUES (101, 'ADMIN_HOME_VIEW', null, 'admin-home');
 -- INSERT INTO public.function(id, code, description, view) VALUES (102, 'ADMIN_SECRET_VIEW', null, 'admin-secret');
 -- INSERT INTO public.function(id, code, description, view) VALUES (103, 'HOME', null, '');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (101, true, 'ADMIN_HOME', null, 'ADMIN_HOME', 'Administracja', 'Pulpit', 'Widok domowy administratora', 'admin-home');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (102, true, 'ADMIN_SECRET', null, 'ADMIN_SECRET', 'Admin', 'Admin Secret View', 'Secret View', 'admin-secret');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Home', 'Home', '');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register', 'register');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (101, true, 'ADMIN_HOME', null, 'ADMIN_HOME', 'Administracja', 'Pulpit', 'Widok domowy administratora');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (102, true, 'ADMIN_SECRET', null, 'ADMIN_SECRET', 'Admin', 'Admin Secret View', 'Secret View');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Home', 'Home');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register');
 -- INSERT INTO public.function(id, code, description, view) VALUES (104, 'REGISTER_VIEW', null, 'register');
 
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'User Home', 'user-home');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'User Home');
 
 -- INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Administracja', 'Lista użytkowników', 'Lista użytkowników', 'user-list');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Administracja', 'Lista użytkowników', 'Lista użytkowników');
 
 
 

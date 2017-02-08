@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.utp.commons.ui.MenuConfig;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  */
 @SpringComponent
 @VaadinSessionScope
-public class MenuComponent {
+public class MenuComponent implements Serializable {
 
     @Autowired
     private UserSessionComponent userSessionComponent;

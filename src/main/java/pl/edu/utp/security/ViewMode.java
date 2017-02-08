@@ -9,5 +9,5 @@ public enum ViewMode {
     DETAILS,
     DELETE,
     LIST,
-    NONE;
+    NONE
 }
