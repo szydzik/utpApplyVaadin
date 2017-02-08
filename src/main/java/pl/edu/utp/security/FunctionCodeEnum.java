@@ -9,7 +9,7 @@ public enum FunctionCodeEnum {
     USER_HOME("user-home", ViewMode.NONE, MenuGroup.USER),
 
 
-    USER("user-list", ViewMode.LIST, MenuGroup.ADMIN),
+    USER_LIST("user-list", ViewMode.LIST, MenuGroup.ADMIN),
     USER_DETAILS("user-details", ViewMode.DETAILS, MenuGroup.ADMIN),
     USER_EDIT("user-edit", ViewMode.EDIT, MenuGroup.ADMIN),
     USER_CREATE("user-create", ViewMode.CREATE, MenuGroup.ADMIN),

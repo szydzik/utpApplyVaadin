@@ -11,7 +11,7 @@ INSERT INTO public.function(id, active, code, description, function_enum, menu_g
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'User Home', 'user-home');
 
 -- INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (107, true, 'USER', null, 'USER', 'Administracja', 'Lista użytkowników', 'Lista użytkowników', 'user-list');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name, view) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Administracja', 'Lista użytkowników', 'Lista użytkowników', 'user-list');
 
 
 

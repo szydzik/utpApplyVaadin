@@ -77,8 +77,7 @@ public class UserListView extends CustomComponent implements View {
 
     void listUsers(String text) {
         List<User> list = repo.findAll();
-        list.forEach(System.out::println);
-
+//        list.forEach(System.out::println);
         if (StringUtils.isEmpty(text)) {
             grid.setContainerDataSource(
                     new BeanItemContainer(User.class, repo.findAll()));

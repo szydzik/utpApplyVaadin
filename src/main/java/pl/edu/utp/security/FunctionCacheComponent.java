@@ -21,7 +21,7 @@ public class FunctionCacheComponent {
     @Autowired
     FunctionRepository functionRepository;
 
-    private Map<FunctionCodeEnum, Function> functionsCache;
+    private Map<FunctionCodeEnum, Map<ViewMode, Function>> functionsCache;
 
     @PostConstruct
     private void postConstruct() {
@@ -33,7 +33,13 @@ public class FunctionCacheComponent {
 
         for (Function function : systemFunctions) {
             if (null != function.getFunctionEnum()) {
-                functionsCache.put(getFunctionCode(function.getFunctionEnum()), function);
+//                functionsCache.put(getFunctionCode(function.getFunctionEnum()), function);
+                Object[] functionArray = getFunctionArray(function.getFunctionEnum());
+                addToCache(
+                        null == functionArray[0] ? FunctionCodeEnum.valueOf(function.getFunctionEnum()) : (FunctionCodeEnum) functionArray[0],
+                        (ViewMode) functionArray[1],
+                        function
+                );
             }else{
 //            TODO dodać własny wyjątek
 //                System.out.println("===== ERROR: Funkcja "+ function.getCode() +" nie posiada nazwy enuma!!!");
@@ -49,8 +55,58 @@ public class FunctionCacheComponent {
         return functionCodeEnum;
     }
 
-    public Map<FunctionCodeEnum, Function> getCache(){
+    public Map<FunctionCodeEnum, Map<ViewMode, Function>> getCache(){
         return functionsCache;
+    }
+
+    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode){
+        if (functionsCache.get(action) != null) {
+            return functionsCache.get(action).get(viewMode);
+        }
+        return null;
+    }
+
+    /**
+     * Funkcja zwraca obiekt Object[]{FunctionCodeEnum, ViewMode} na podstawie functionEnum z funkcji
+     * @param functionEnum
+     * @return
+     */
+    public Object[] getFunctionArray(String functionEnum) {
+        ViewMode viewMode;
+        FunctionCodeEnum functionCodeEnum = null;
+
+        if (stringEndsWithAny(functionEnum, "_LIST")) {
+            viewMode = ViewMode.LIST;
+            functionCodeEnum = FunctionCodeEnum.valueOf(functionEnum);
+        } else if (stringEndsWithAny(functionEnum, "_DETAILS", "_CREATE", "_EDIT", "_DELETE")) {
+
+            String stringViewMode = functionEnum.substring(functionEnum.lastIndexOf("_") + 1, functionEnum.length());
+            String functionCode = functionEnum.substring(0, functionEnum.lastIndexOf("_"));
+
+            viewMode = ViewMode.valueOf(stringViewMode);
+            functionCodeEnum = FunctionCodeEnum.valueOf(functionCode);
+
+        } else {
+            viewMode = ViewMode.NONE;
+            functionCodeEnum = FunctionCodeEnum.valueOf(functionEnum);
+        }
+        return new Object[]{functionCodeEnum, viewMode};
+    }
+
+    private boolean stringEndsWithAny(String toCheck, String... endings) {
+        for (String end : endings) {
+            if (toCheck.endsWith(end)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addToCache(FunctionCodeEnum functionCodeTO, ViewMode viewMode, Function function) {
+        if (null == functionsCache.get(functionCodeTO)) {
+            functionsCache.put(functionCodeTO, new HashMap<>());
+        }
+        functionsCache.get(functionCodeTO).put(viewMode, function);
     }
 
 }

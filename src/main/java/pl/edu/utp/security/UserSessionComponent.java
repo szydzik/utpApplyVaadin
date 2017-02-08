@@ -134,4 +134,26 @@ public class UserSessionComponent {
         return result;
     }
 
+    /**
+     * Zwraca obiekt funkcji dla danego enuma i trybu widoku.
+     *
+     * @param action
+     * @param viewMode
+     * @return
+     */
+    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode) {
+        return functionCacheComponent.getFunction(action, viewMode);
+    }
+
+    /**
+     * Zwraca, czy użytkownik ma dostęp do danej funkcji. Używane przy tworzeniu
+     * menu.
+     *
+     * @param functionCodeEnum
+     * @return
+     */
+    public boolean hasAccess(FunctionCodeEnum functionCodeEnum) {
+        return priviledgesComponent.hasPriviledges(functionCodeEnum, functionCodeEnum.getViewMode());
+    }
+
 }
