@@ -10,16 +10,18 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import pl.edu.utp.commons.ui.AbstractBaseView;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.security.FunctionCodeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @UIScope
 @SpringView(name = UserListView.VIEW_NAME)
-public class UserListView extends CustomComponent implements View {
+public class UserListView extends AbstractBaseView implements View {
 
     public static final String VIEW_NAME = "user-list";
 
@@ -28,6 +30,11 @@ public class UserListView extends CustomComponent implements View {
     private Grid grid;
     private TextField filter;
     private Button addNewBtn;
+
+    @Override
+    public FunctionCodeEnum getFunction() {
+        return FunctionCodeEnum.USER_LIST;
+    }
 
     @Autowired
     public UserListView(UserRepository repo, UserEditor editor) {

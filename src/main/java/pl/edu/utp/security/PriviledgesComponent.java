@@ -5,14 +5,18 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.UI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.repository.RoleRepository;
 import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.utils.LoggerUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -20,7 +24,7 @@ import java.util.*;
  */
 @SpringComponent
 @VaadinSessionScope
-public class PriviledgesComponent implements ViewAccessControl {
+public class PriviledgesComponent implements ViewAccessControl, Serializable{
 
     private List<String> availableFunctions = new ArrayList<>();
 //    private List<FunctionCodeEnum> functionCodeEnums = new ArrayList<>();
@@ -35,34 +39,36 @@ public class PriviledgesComponent implements ViewAccessControl {
     @Autowired
     private RoleRepository roleRepository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PriviledgesComponent.class);
+
     @PostConstruct
     private void postConstruct(){
-//        reload("admin");
     }
 
     public void reload(String userLogin) {
-        System.out.println("===============================================================================");
+        LOGGER.info(LoggerUtils.getSeparator());
         Set<Function> functions;
 
         if (userLogin != null && !userLogin.equals("anonymousUser") && !userLogin.isEmpty()) {
-            System.out.println("====== Odświeżam uprawnienia do funkcji dla: "+userLogin);
+            LOGGER.info("===== Odświeżam uprawnienia do funkcji dla: {}", userLogin);
             functions = getFunctionsByLogin(userLogin);
         }else{
-            System.out.println("====== Odświeżam uprawnienia do funkcji dla anonimowego użytkownika: "+userLogin);
+            LOGGER.info("===== Odświeżam uprawnienia do funkcji dla anonimowego użytkownika: {}", userLogin);
             functions = getFunctionsForAnonymousUser();
         }
         for (Function f : functions){
             availableFunctions.add(f.getFunctionEnum());
         }
+        LOGGER.info("===== Użytkownikowi przydzielono: [ {} ] uprawnień:", this.availableFunctions.size());
+        availableFunctions.forEach(i -> LOGGER.info("===== --- {}",i));
         for (String s : availableFunctions){
             if (s != null) {
                 allowedViews.add(FunctionCodeEnum.valueOf(s).getView());
             }
         }
-        System.out.println("====== Użytkownikowi przydzielono: [ "+this.availableFunctions.size()+" ] uprawnień.");
-        availableFunctions.forEach(System.out::println);
-        System.out.println("===== Przydzielam widoki");
-        System.out.println("===============================================================================");
+        LOGGER.info("===== Użytkownikowi przydzielono: [ {} ] widoków:", allowedViews.size());
+        allowedViews.forEach(i -> LOGGER.info("===== --- {}",i));
+        LOGGER.info(LoggerUtils.getSeparator());
 
     }
 

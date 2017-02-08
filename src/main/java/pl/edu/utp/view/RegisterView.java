@@ -10,16 +10,18 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.edu.utp.commons.ui.AbstractBaseView;
+import pl.edu.utp.security.FunctionCodeEnum;
 import pl.edu.utp.validator.CustomValidator;
 
 import java.util.Date;
 
 /**
- * Created by xxbar on 08.01.2017.
+ * Created by szydzik on 08.01.2017.
  */
 @UIScope
 @SpringView(name = RegisterView.VIEW_NAME)
-public class RegisterView extends CustomComponent implements View {
+public class RegisterView extends AbstractBaseView implements View {
 
     public static final String VIEW_NAME = "register";
 
@@ -31,7 +33,10 @@ public class RegisterView extends CustomComponent implements View {
 
     private final Button registerButton;
 
-
+    @Override
+    public FunctionCodeEnum getFunction() {
+        return FunctionCodeEnum.REGISTER;
+    }
 
     public RegisterView() {
         setSizeFull();

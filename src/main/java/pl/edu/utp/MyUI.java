@@ -14,6 +14,8 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,6 +39,8 @@ import pl.edu.utp.view.error.PageNotFoundView;
 //@Push(transport = Transport.WEBSOCKET_XHR) // Websocket would bypass the filter chain, Websocket+XHR works
 @SpringViewDisplay
 public class MyUI extends UI implements ViewDisplay {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyUI.class);
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -111,7 +115,7 @@ public class MyUI extends UI implements ViewDisplay {
 
 //        -----add buttons-----
         btnTest = new Button("Test button", evt -> {
-            System.out.println("==========TEST current login: " + userSessionComponent.getCurrentUser().getLogin());
+            LOGGER.debug("==========TEST current login: {}", userSessionComponent.getCurrentUser().getLogin());
 //            userSessionBean.refreshUserFromContext();
         });
         navigationBar.addComponent(btnTest);

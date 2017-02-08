@@ -10,6 +10,8 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.edu.utp.commons.ui.AbstractBaseView;
+import pl.edu.utp.security.FunctionCodeEnum;
 import pl.edu.utp.validator.CustomValidator;
 
 /**
@@ -17,7 +19,7 @@ import pl.edu.utp.validator.CustomValidator;
  */
 @UIScope
 @SpringView(name = SimpleLoginView.VIEW_NAME)
-public class SimpleLoginView extends CustomComponent implements View {
+public class SimpleLoginView extends AbstractBaseView implements View {
 
     public static final String VIEW_NAME = "login";
 
@@ -28,6 +30,11 @@ public class SimpleLoginView extends CustomComponent implements View {
     private final Button facebookButton;
     private final Button googleButton;
     private final Button gitHubButton;
+
+    @Override
+    public FunctionCodeEnum getFunction() {
+        return FunctionCodeEnum.SIGN_IN;
+    }
 
     public SimpleLoginView() {
         setSizeFull();

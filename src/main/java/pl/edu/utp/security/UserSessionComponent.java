@@ -2,6 +2,8 @@ package pl.edu.utp.security;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +11,10 @@ import pl.edu.utp.model.security.Function;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
+import pl.edu.utp.utils.LoggerUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.Set;
  */
 @SpringComponent
 @VaadinSessionScope
-public class UserSessionComponent {
+public class UserSessionComponent implements Serializable {
 
     private User currentUser;
 
@@ -34,6 +38,7 @@ public class UserSessionComponent {
     @Autowired
     PriviledgesComponent priviledgesComponent;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserSessionComponent.class);
 
     @PostConstruct
     private void postConstruct(){
@@ -53,13 +58,13 @@ public class UserSessionComponent {
      *
      */
     public void refreshUserFromContext() {
-        System.out.println("-----------------------------------");
+        LOGGER.info(LoggerUtils.getSeparator());
         String username = getUserName();
-        System.out.println("User from session: "+username);
+        LOGGER.info("User from session: {}", username);
 
         currentUser = getUser(username);
-        System.out.println("User from db: "+currentUser);
-        System.out.println("-----------------------------------");
+        LOGGER.info("User from db: {}", currentUser);
+        LOGGER.info(LoggerUtils.getSeparator());
 
         //przeładowanie uprawnień
         priviledgesComponent.reload(currentUser.getLogin());

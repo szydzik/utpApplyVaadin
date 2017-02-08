@@ -2,11 +2,15 @@ package pl.edu.utp.security;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.repository.FunctionRepository;
+import pl.edu.utp.utils.LoggerUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +20,19 @@ import java.util.Map;
  */
 @SpringComponent
 @VaadinSessionScope
-public class FunctionCacheComponent {
+public class FunctionCacheComponent implements Serializable {
 
     @Autowired
     FunctionRepository functionRepository;
 
     private Map<FunctionCodeEnum, Map<ViewMode, Function>> functionsCache;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FunctionCacheComponent.class);
+
     @PostConstruct
     private void postConstruct() {
-        System.out.println("===============================================================================");
-        System.out.println("===== Rozpoczynam ładowanie cache funkcji");
+        LOGGER.info(LoggerUtils.getSeparator());
+        LOGGER.info("===== Rozpoczynam ładowanie cache funkcji");
         List<Function> systemFunctions = functionRepository.findAll();
 
         functionsCache = new HashMap<>();
@@ -46,8 +52,8 @@ public class FunctionCacheComponent {
                 throw new UnsupportedOperationException("===== ERROR: Funkcja "+ function.getCode() +" nie posiada nazwy enuma!!!");
             }
         }
-        System.out.println("=====  Załadowano cache, SIZE: "+functionsCache.size());
-        System.out.println("===============================================================================");
+        LOGGER.info("===== Załadowano cache, SIZE: {}",functionsCache.size());
+        LOGGER.info(LoggerUtils.getSeparator());
     }
 
     private FunctionCodeEnum getFunctionCode(String code){

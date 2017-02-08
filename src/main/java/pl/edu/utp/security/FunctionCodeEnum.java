@@ -18,7 +18,10 @@ public enum FunctionCodeEnum {
     REGISTER("register", ViewMode.NONE, MenuGroup.SIGN_UP),
 
     ADMIN_HOME("admin-home", ViewMode.NONE, MenuGroup.ADMIN),
-    ADMIN_SECRET("admin-secret", ViewMode.NONE, MenuGroup.ADMIN)
+    ADMIN_SECRET("admin-secret", ViewMode.NONE, MenuGroup.ADMIN),
+
+    SIGN_IN("login"),
+    UNKNOWN("unkown")
     ;
 
 
