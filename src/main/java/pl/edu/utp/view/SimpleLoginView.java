@@ -32,7 +32,7 @@ public class SimpleLoginView extends AbstractBaseView implements View {
     private final Button gitHubButton;
 
     @Override
-    public FunctionCodeEnum getFunction() {
+    public FunctionCodeEnum getFunctionCodeEnum() {
         return FunctionCodeEnum.SIGN_IN;
     }
 

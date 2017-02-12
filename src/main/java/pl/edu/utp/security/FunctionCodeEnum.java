@@ -5,45 +5,42 @@ package pl.edu.utp.security;
  */
 public enum FunctionCodeEnum {
 
-    HOME("", ViewMode.NONE, MenuGroup.HOME),
-    USER_HOME("user-home", ViewMode.NONE, MenuGroup.USER),
 
+//    user management
+    USER_LIST("USER", "user-list", ViewMode.LIST, MenuGroup.ADMIN),
+    USER_DETAILS("USER", "user-details", ViewMode.DETAILS, MenuGroup.ADMIN),
+    USER_EDIT("USER", "user-edit", ViewMode.EDIT, MenuGroup.ADMIN),
+    USER_CREATE("USER", "user-create", ViewMode.CREATE, MenuGroup.ADMIN),
+    USER_DELETE("USER", "user-delete", ViewMode.DELETE, MenuGroup.ADMIN),
 
-    USER_LIST("user-list", ViewMode.LIST, MenuGroup.ADMIN),
-    USER_DETAILS("user-details", ViewMode.DETAILS, MenuGroup.ADMIN),
-    USER_EDIT("user-edit", ViewMode.EDIT, MenuGroup.ADMIN),
-    USER_CREATE("user-create", ViewMode.CREATE, MenuGroup.ADMIN),
-    USER_DELETE("user-delete", ViewMode.DELETE, MenuGroup.ADMIN),
+//    admin views
+    ADMIN_HOME("ADMIN", "admin-home", ViewMode.NONE, MenuGroup.ADMIN),
+    ADMIN_SECRET("ADMIN", "admin-secret", ViewMode.NONE, MenuGroup.ADMIN),
 
-    ADMIN_HOME("admin-home", ViewMode.NONE, MenuGroup.ADMIN),
-    ADMIN_SECRET("admin-secret", ViewMode.NONE, MenuGroup.ADMIN),
-
-
-    REGISTER("register", ViewMode.NONE, MenuGroup.SIGN_UP),
+//    others
+    HOME(null, "", ViewMode.NONE, MenuGroup.HOME),
+    USER_HOME(null, "user-home", ViewMode.NONE, MenuGroup.USER),
+    REGISTER(null, "register", ViewMode.NONE, MenuGroup.SIGN_UP),
     SIGN_IN("login"),
     UNKNOWN("unkown")
     ;
 
-
+    private final String base;
     private final String view;
     private final ViewMode viewMode;
     private final MenuGroup menuGroup;
 
-    FunctionCodeEnum(String view, ViewMode viewMode, MenuGroup menuGroup) {
+    FunctionCodeEnum(String base, String view, ViewMode viewMode, MenuGroup menuGroup) {
+        this.base = base;
         this.view = view;
         this.viewMode = viewMode;
         this.menuGroup = menuGroup;
     }
 
     FunctionCodeEnum(String view) {
+        this.base = null;
         this.view = view;
         this.viewMode = null;
-        this.menuGroup = null;
-    }
-
-    FunctionCodeEnum(String view, ViewMode viewMode) {
-        this.view = view;
-        this.viewMode = viewMode;
         this.menuGroup = null;
     }
 

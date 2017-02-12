@@ -34,7 +34,7 @@ public class RegisterView extends AbstractBaseView implements View {
     private final Button registerButton;
 
     @Override
-    public FunctionCodeEnum getFunction() {
+    public FunctionCodeEnum getFunctionCodeEnum() {
         return FunctionCodeEnum.REGISTER;
     }
 

@@ -11,7 +11,6 @@ import com.vaadin.ui.themes.Reindeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import pl.edu.utp.commons.ui.AbstractBaseView;
-import pl.edu.utp.model.security.Role;
 import pl.edu.utp.model.security.User;
 import pl.edu.utp.repository.UserRepository;
 import pl.edu.utp.security.FunctionCodeEnum;
@@ -32,7 +31,7 @@ public class UserListView extends AbstractBaseView implements View {
     private Button addNewBtn;
 
     @Override
-    public FunctionCodeEnum getFunction() {
+    public FunctionCodeEnum getFunctionCodeEnum() {
         return FunctionCodeEnum.USER_LIST;
     }
 
@@ -58,7 +57,7 @@ public class UserListView extends AbstractBaseView implements View {
             }
         });
 
-        addNewBtn.addClickListener(e -> editor.editUser(new User("","","","", new ArrayList<Role>())));
+        addNewBtn.addClickListener(e -> editor.editUser(new User("","","","", new ArrayList<>())));
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
@@ -84,7 +83,6 @@ public class UserListView extends AbstractBaseView implements View {
 
     void listUsers(String text) {
         List<User> list = repo.findAll();
-//        list.forEach(System.out::println);
         if (StringUtils.isEmpty(text)) {
             grid.setContainerDataSource(
                     new BeanItemContainer(User.class, repo.findAll()));

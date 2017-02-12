@@ -25,7 +25,8 @@ public class FunctionCacheComponent implements Serializable {
     @Autowired
     FunctionRepository functionRepository;
 
-    private Map<FunctionCodeEnum, Map<ViewMode, Function>> functionsCache;
+//    private Map<FunctionCodeEnum, Map<ViewMode, Function>> functionsCache;
+    private Map<FunctionCodeEnum, Function> functionsCache;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FunctionCacheComponent.class);
 
@@ -39,13 +40,15 @@ public class FunctionCacheComponent implements Serializable {
 
         for (Function function : systemFunctions) {
             if (null != function.getFunctionEnum()) {
-//                functionsCache.put(getFunctionCode(function.getFunctionEnum()), function);
-                Object[] functionArray = getFunctionArray(function.getFunctionEnum());
-                addToCache(
-                        null == functionArray[0] ? FunctionCodeEnum.valueOf(function.getFunctionEnum()) : (FunctionCodeEnum) functionArray[0],
-                        (ViewMode) functionArray[1],
-                        function
-                );
+
+                functionsCache.put(getFunctionCodeEnum(function.getFunctionEnum()), function);
+
+//                Object[] functionArray = getFunctionArray(function.getFunctionEnum());
+//                addToCache(
+//                        null == functionArray[0] ? FunctionCodeEnum.valueOf(function.getFunctionEnum()) : (FunctionCodeEnum) functionArray[0],
+//                        (ViewMode) functionArray[1],
+//                        function
+//                );
             }else{
 //            TODO dodać własny wyjątek
 //                System.out.println("===== ERROR: Funkcja "+ function.getCode() +" nie posiada nazwy enuma!!!");
@@ -56,18 +59,27 @@ public class FunctionCacheComponent implements Serializable {
         LOGGER.info(LoggerUtils.getSeparator());
     }
 
-    private FunctionCodeEnum getFunctionCode(String code){
-        FunctionCodeEnum functionCodeEnum = FunctionCodeEnum.valueOf(code);
-        return functionCodeEnum;
+    private FunctionCodeEnum getFunctionCodeEnum(String code){
+        return FunctionCodeEnum.valueOf(code);
     }
 
-    public Map<FunctionCodeEnum, Map<ViewMode, Function>> getCache(){
+//    public Map<FunctionCodeEnum, Map<ViewMode, Function>> getCache(){
+//        return functionsCache;
+//    }
+    public Map<FunctionCodeEnum, Function> getCache(){
         return functionsCache;
     }
 
-    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode){
+//    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode){
+//        if (functionsCache.get(action) != null) {
+//            return functionsCache.get(action).get(viewMode);
+//        }
+//        return null;
+//    }
+
+    public Function getFunction(FunctionCodeEnum action){
         if (functionsCache.get(action) != null) {
-            return functionsCache.get(action).get(viewMode);
+            return functionsCache.get(action);
         }
         return null;
     }
@@ -108,11 +120,11 @@ public class FunctionCacheComponent implements Serializable {
         return false;
     }
 
-    private void addToCache(FunctionCodeEnum functionCodeTO, ViewMode viewMode, Function function) {
-        if (null == functionsCache.get(functionCodeTO)) {
-            functionsCache.put(functionCodeTO, new HashMap<>());
-        }
-        functionsCache.get(functionCodeTO).put(viewMode, function);
-    }
+//    private void addToCache(FunctionCodeEnum functionCodeEnum, ViewMode viewMode, Function function) {
+//        if (null == functionsCache.get(functionCodeEnum)) {
+//            functionsCache.put(functionCodeEnum, new HashMap<>());
+//        }
+//        functionsCache.get(functionCodeEnum).put(viewMode, function);
+//    }
 
 }

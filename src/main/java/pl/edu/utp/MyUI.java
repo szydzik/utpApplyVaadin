@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.form.SimpleLoginForm;
+import pl.edu.utp.security.MenuComponent;
 import pl.edu.utp.security.PriviledgesComponent;
 import pl.edu.utp.security.SecurityUtils;
 import pl.edu.utp.security.UserSessionComponent;
@@ -59,6 +60,9 @@ public class MyUI extends UI implements ViewDisplay {
 
     @Autowired
     PriviledgesComponent priviledgesComponent;
+
+    @Autowired
+    MenuComponent menuComponent;
 
     private Panel panel;
 
@@ -115,7 +119,8 @@ public class MyUI extends UI implements ViewDisplay {
 
 //        -----add buttons-----
         btnTest = new Button("Test button", evt -> {
-            LOGGER.debug("==========TEST current login: {}", userSessionComponent.getCurrentUser().getLogin());
+            LOGGER.info("==========TEST current login: {}", userSessionComponent.getCurrentUser().getLogin());
+            menuComponent.getTabs();
 //            userSessionBean.refreshUserFromContext();
         });
         navigationBar.addComponent(btnTest);
@@ -226,8 +231,8 @@ public class MyUI extends UI implements ViewDisplay {
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
             this.showView(homeView);
-            refreshPriviledges();
-            refreshMenu();
+
+            refresh();
             return true;
         } catch (AuthenticationException ex) {
             return false;
@@ -246,8 +251,10 @@ public class MyUI extends UI implements ViewDisplay {
         }
     }
 
-    private void refreshPriviledges(){
+    private void refresh(){
+        refreshMenu();
         userSessionComponent.refreshUserFromContext();
+        menuComponent.refresh();
     }
 
 }

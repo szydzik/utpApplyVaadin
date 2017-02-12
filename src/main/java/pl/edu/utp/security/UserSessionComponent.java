@@ -146,8 +146,11 @@ public class UserSessionComponent implements Serializable {
      * @param viewMode
      * @return
      */
-    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode) {
-        return functionCacheComponent.getFunction(action, viewMode);
+//    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode) {
+//        return functionCacheComponent.getFunction(action, viewMode);
+//    }
+    public Function getFunction(FunctionCodeEnum action) {
+        return functionCacheComponent.getFunction(action);
     }
 
     /**

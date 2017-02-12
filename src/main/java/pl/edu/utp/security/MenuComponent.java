@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by szydzik on 08.02.2017.
@@ -27,16 +26,7 @@ public class MenuComponent implements Serializable {
 
     @PostConstruct
     private void postConstruct() {
-
-        MenuConfig home = createMenuConfig("Home", FontAwesome.HOME);
-        home.addMenuItem(FunctionCodeEnum.HOME);
-        home.addMenuItem(FunctionCodeEnum.USER_HOME);
-
-        MenuConfig admin = createMenuConfig("Admin", FontAwesome.USER_MD);
-        admin.addMenuItem(FunctionCodeEnum.ADMIN_HOME);
-        admin.addMenuItem(FunctionCodeEnum.ADMIN_SECRET);
-        admin.addMenuItem(FunctionCodeEnum.USER_LIST);
-
+        refresh();
     }
 
     private MenuConfig createMenuConfig(String name, FontAwesome icon) {
@@ -45,18 +35,39 @@ public class MenuComponent implements Serializable {
         return menuConfig;
     }
 
-    public List<MenuConfig> getMenuTabs() {
-        return tabs.values().stream().filter(mc -> mc.isAnyActive()).collect(Collectors.toList());
+//    public List<MenuConfig> getMenuTabs() {
+//        return tabs.values().stream().filter(MenuConfig::isAnyActive).collect(Collectors.toList());
+//    }
+
+    public Map<String, MenuConfig> getTabs() {
+        return tabs;
     }
 
-    public List<Object[]> getMenuModel(String tabName) {
+    public List<MenuItemModel> getMenuModel(String tabName) {
         return tabs.get(tabName).getMenuModel();
     }
 
-    public List<FunctionCodeEnum> getAllMenuFunctionCodeEnums() {
-        return getMenuTabs().stream()
-                .flatMap(mt -> mt.getMenuModel().stream())
-                .map(mm -> (FunctionCodeEnum) mm[1])
-                .collect(Collectors.toList());
+//    public List<FunctionCodeEnum> getAllMenuFunctionCodeEnums() {
+//        return getMenuTabs().stream()
+//                .flatMap(mt -> mt.getMenuModel().stream())
+//                .map(mm -> mm.getFuncionCodeEnum())
+//                .collect(Collectors.toList());
+//    }
+
+    public void refresh(){
+        tabs.clear();
+
+        MenuConfig home = createMenuConfig("Home", FontAwesome.HOME);
+        home.addMenuItem(FunctionCodeEnum.HOME);
+
+        MenuConfig admin = createMenuConfig("Admin", FontAwesome.USER_MD);
+        admin.addMenuItem(FunctionCodeEnum.HOME);
+        admin.addMenuItem(FunctionCodeEnum.ADMIN_HOME);
+        admin.addMenuItem(FunctionCodeEnum.ADMIN_SECRET);
+        admin.addMenuItem(FunctionCodeEnum.USER_LIST);
+
+        MenuConfig user = createMenuConfig("User", FontAwesome.USER);
+        user.addMenuItem(FunctionCodeEnum.HOME);
+        user.addMenuItem(FunctionCodeEnum.USER_HOME);
     }
 }

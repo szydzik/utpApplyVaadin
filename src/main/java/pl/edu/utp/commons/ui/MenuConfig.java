@@ -3,6 +3,7 @@ package pl.edu.utp.commons.ui;
 import com.vaadin.server.FontAwesome;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.security.FunctionCodeEnum;
+import pl.edu.utp.security.MenuItemModel;
 import pl.edu.utp.security.UserSessionComponent;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class MenuConfig {
 
     private final String name;
     private final FontAwesome icon;
-    private final List<Object[]> menuModel;
+    private final List<MenuItemModel> menuModel;
     private final UserSessionComponent userSessionComponent;
 
     public MenuConfig(String name, FontAwesome icon, UserSessionComponent userSessionComponent) {
@@ -33,7 +34,7 @@ public class MenuConfig {
         return icon;
     }
 
-    public List<Object[]> getMenuModel() {
+    public List<MenuItemModel> getMenuModel() {
         return menuModel;
     }
 
@@ -42,19 +43,26 @@ public class MenuConfig {
     }
 
     public void addMenuItem(FunctionCodeEnum functionCodeEnum) {
-        Function f = userSessionComponent.getFunction(functionCodeEnum, functionCodeEnum.getViewMode());
+//        Function f = userSessionComponent.getFunction(functionCodeEnum, functionCodeEnum.getViewMode());
+        Function f = userSessionComponent.getFunction(functionCodeEnum);
         menuModel.add(
-                new Object[]{
+                new MenuItemModel(
                         null == f ? "TODO insert" : f.getMenuName(),
                         functionCodeEnum,
                         functionCodeEnum.getViewMode(),
                         userSessionComponent.hasAccess(functionCodeEnum)
-                }
+                        )
+//                new Object[]{
+//                        null == f ? "TODO insert" : f.getMenuName(),
+//                        functionCodeEnum,
+//                        functionCodeEnum.getViewMode(),
+//                        userSessionComponent.hasAccess(functionCodeEnum)
+//                }
         );
     }
 
     public boolean isAnyActive() {
-        return menuModel.stream().anyMatch((o) -> ((boolean) o[3]));
+        return menuModel.stream().anyMatch((MenuItemModel o) -> (o.isAccess()));
     }
 
 
