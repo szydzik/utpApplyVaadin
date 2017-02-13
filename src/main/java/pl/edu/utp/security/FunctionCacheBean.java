@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @SpringComponent
 @VaadinSessionScope
-public class FunctionCacheComponent implements Serializable {
+public class FunctionCacheBean implements Serializable {
 
     @Autowired
     FunctionRepository functionRepository;
@@ -28,7 +28,7 @@ public class FunctionCacheComponent implements Serializable {
 //    private Map<FunctionCodeEnum, Map<ViewMode, Function>> functionsCache;
     private Map<FunctionCodeEnum, Function> functionsCache;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FunctionCacheComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FunctionCacheBean.class);
 
     @PostConstruct
     private void postConstruct() {

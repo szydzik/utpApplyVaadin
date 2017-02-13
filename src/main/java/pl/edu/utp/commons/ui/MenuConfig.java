@@ -4,9 +4,9 @@ import com.vaadin.server.FontAwesome;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.security.FunctionCodeEnum;
 import pl.edu.utp.security.MenuItemModel;
-import pl.edu.utp.security.UserSessionComponent;
+import pl.edu.utp.security.UserSessionBean;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,49 +15,39 @@ import java.util.List;
 public class MenuConfig {
 
     private final String name;
-    private final FontAwesome icon;
-    private final List<MenuItemModel> menuModel;
-    private final UserSessionComponent userSessionComponent;
 
-    public MenuConfig(String name, FontAwesome icon, UserSessionComponent userSessionComponent) {
+    private final List<MenuItemModel> menuModel;
+    private final UserSessionBean userSessionBean;
+
+    public MenuConfig(String name, UserSessionBean userSessionBean) {
         this.name = name;
-        this.icon = icon;
-        this.menuModel = new ArrayList<>();
-        this.userSessionComponent = userSessionComponent;
+        this.menuModel = new LinkedList<>();
+        this.userSessionBean = userSessionBean;
     }
 
     public String getName() {
         return name;
     }
 
-    public FontAwesome getIcon() {
-        return icon;
-    }
-
     public List<MenuItemModel> getMenuModel() {
         return menuModel;
     }
 
-    public UserSessionComponent getUserSessionComponent() {
-        return userSessionComponent;
+    public UserSessionBean getUserSessionBean() {
+        return userSessionBean;
     }
 
-    public void addMenuItem(FunctionCodeEnum functionCodeEnum) {
+    public void addMenuItem(FunctionCodeEnum functionCodeEnum, FontAwesome icon) {
 //        Function f = userSessionComponent.getFunction(functionCodeEnum, functionCodeEnum.getViewMode());
-        Function f = userSessionComponent.getFunction(functionCodeEnum);
+        Function f = userSessionBean.getFunction(functionCodeEnum);
         menuModel.add(
                 new MenuItemModel(
                         null == f ? "TODO insert" : f.getMenuName(),
                         functionCodeEnum,
                         functionCodeEnum.getViewMode(),
-                        userSessionComponent.hasAccess(functionCodeEnum)
+                        icon,
+                        userSessionBean.hasAccess(functionCodeEnum)
                         )
-//                new Object[]{
-//                        null == f ? "TODO insert" : f.getMenuName(),
-//                        functionCodeEnum,
-//                        functionCodeEnum.getViewMode(),
-//                        userSessionComponent.hasAccess(functionCodeEnum)
-//                }
         );
     }
 

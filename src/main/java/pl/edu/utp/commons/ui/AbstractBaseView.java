@@ -3,8 +3,8 @@ package pl.edu.utp.commons.ui;
 import com.vaadin.ui.CustomComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.utp.security.FunctionCodeEnum;
-import pl.edu.utp.security.PriviledgesComponent;
-import pl.edu.utp.security.UserSessionComponent;
+import pl.edu.utp.security.PriviledgesBean;
+import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.security.ViewMode;
 
 import java.io.Serializable;
@@ -17,27 +17,27 @@ import java.util.List;
 public abstract class AbstractBaseView extends CustomComponent implements Serializable {
 
     @Autowired
-    private UserSessionComponent userSessionComponent;
+    private UserSessionBean userSessionBean;
 
     @Autowired
-    private PriviledgesComponent priviledgesComponent;
+    private PriviledgesBean priviledgesBean;
 
     private ViewMode mode;
 
-    public UserSessionComponent getUserSessionComponent() {
-        return userSessionComponent;
+    public UserSessionBean getUserSessionBean() {
+        return userSessionBean;
     }
 
-    public void setUserSessionComponent(UserSessionComponent userSessionComponent) {
-        this.userSessionComponent = userSessionComponent;
+    public void setUserSessionBean(UserSessionBean userSessionBean) {
+        this.userSessionBean = userSessionBean;
     }
 
-    public PriviledgesComponent getPriviledgesComponent() {
-        return priviledgesComponent;
+    public PriviledgesBean getPriviledgesBean() {
+        return priviledgesBean;
     }
 
-    public void setPriviledgesComponent(PriviledgesComponent priviledgesComponent) {
-        this.priviledgesComponent = priviledgesComponent;
+    public void setPriviledgesBean(PriviledgesBean priviledgesBean) {
+        this.priviledgesBean = priviledgesBean;
     }
 
     public ViewMode getMode() {

@@ -10,7 +10,6 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.shared.ui.ui.Transport;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -24,10 +23,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.form.SimpleLoginForm;
-import pl.edu.utp.security.MenuComponent;
-import pl.edu.utp.security.PriviledgesComponent;
+import pl.edu.utp.security.MenuBean;
+import pl.edu.utp.security.PriviledgesBean;
 import pl.edu.utp.security.SecurityUtils;
-import pl.edu.utp.security.UserSessionComponent;
+import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.view.*;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
@@ -38,48 +37,44 @@ import pl.edu.utp.view.error.PageNotFoundView;
 @Theme(ValoTheme.THEME_NAME)
 @SpringUI
 //@Push(transport = Transport.WEBSOCKET_XHR) // Websocket would bypass the filter chain, Websocket+XHR works
-@SpringViewDisplay
+//@SpringViewDisplay
 public class MyUI extends UI implements ViewDisplay {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyUI.class);
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    PageNotFoundView pageNotFoundView;
-
-    @Autowired
-    SpringViewProvider viewProvider;
-
-    @Autowired
-    HomeView homeView;
-
-    @Autowired
-    UserSessionComponent userSessionComponent;
-
-    @Autowired
-    PriviledgesComponent priviledgesComponent;
-
-    @Autowired
-    MenuComponent menuComponent;
+//  Autowired
+    private final AuthenticationManager authenticationManager;
+    private final PageNotFoundView pageNotFoundView;
+    private final SpringViewProvider viewProvider;
+    private final HomeView homeView;
+    private final UserSessionBean userSessionBean;
+    private final PriviledgesBean priviledgesBean;
+    private final MenuBean menuBean;
+//  Autowired - end
 
     private Panel panel;
 
-    //buttons
+//  buttons
     private Button btnHome;
     private Button btnUser;
     private Button btnAdmin;
     private Button btnAdminHidden;
-//    private Button btnAccessControl;
     private Button btnSignIn;
     private Button btnSignUp;
     private Button btnLogout;
     private Button btnUsers;
     private Button btnTest;
 
-    public MyUI() {
+    @Autowired
+    public MyUI(AuthenticationManager authenticationManager, PageNotFoundView pageNotFoundView, SpringViewProvider viewProvider, HomeView homeView, UserSessionBean userSessionBean, PriviledgesBean priviledgesBean, MenuBean menuBean) {
         this.panel = new Panel();
+        this.authenticationManager = authenticationManager;
+        this.pageNotFoundView = pageNotFoundView;
+        this.viewProvider = viewProvider;
+        this.homeView = homeView;
+        this.userSessionBean = userSessionBean;
+        this.priviledgesBean = priviledgesBean;
+        this.menuBean = menuBean;
     }
 
 
@@ -119,8 +114,8 @@ public class MyUI extends UI implements ViewDisplay {
 
 //        -----add buttons-----
         btnTest = new Button("Test button", evt -> {
-            LOGGER.info("==========TEST current login: {}", userSessionComponent.getCurrentUser().getLogin());
-            menuComponent.getTabs();
+            LOGGER.info("==========TEST current login: {}", userSessionBean.getCurrentUser().getLogin());
+            menuBean.getTabs();
 //            userSessionBean.refreshUserFromContext();
         });
         navigationBar.addComponent(btnTest);
@@ -170,7 +165,7 @@ public class MyUI extends UI implements ViewDisplay {
 //        getNavigator().setErrorView(PageNotFoundView.class);
         root.addComponent(navigationBar);
 
-        panel = new Panel();
+//        panel = new Panel();
         panel.setSizeFull();
         root.addComponent(panel);
         root.setExpandRatio(panel, 1.0f);
@@ -253,8 +248,8 @@ public class MyUI extends UI implements ViewDisplay {
 
     private void refresh(){
         refreshMenu();
-        userSessionComponent.refreshUserFromContext();
-        menuComponent.refresh();
+        userSessionBean.refreshUserFromContext();
+        menuBean.refresh();
     }
 
 }

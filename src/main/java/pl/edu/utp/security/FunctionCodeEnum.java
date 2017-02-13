@@ -7,20 +7,20 @@ public enum FunctionCodeEnum {
 
 
 //    user management
-    USER_LIST("USER", "user-list", ViewMode.LIST, MenuGroup.ADMIN),
-    USER_DETAILS("USER", "user-details", ViewMode.DETAILS, MenuGroup.ADMIN),
-    USER_EDIT("USER", "user-edit", ViewMode.EDIT, MenuGroup.ADMIN),
-    USER_CREATE("USER", "user-create", ViewMode.CREATE, MenuGroup.ADMIN),
-    USER_DELETE("USER", "user-delete", ViewMode.DELETE, MenuGroup.ADMIN),
+    USER_LIST("USER", "user-list", ViewMode.LIST, MenuGroupEnum.ADMIN),
+    USER_DETAILS("USER", "user-details", ViewMode.DETAILS, MenuGroupEnum.ADMIN),
+    USER_EDIT("USER", "user-edit", ViewMode.EDIT, MenuGroupEnum.ADMIN),
+    USER_CREATE("USER", "user-create", ViewMode.CREATE, MenuGroupEnum.ADMIN),
+    USER_DELETE("USER", "user-delete", ViewMode.DELETE, MenuGroupEnum.ADMIN),
 
 //    admin views
-    ADMIN_HOME("ADMIN", "admin-home", ViewMode.NONE, MenuGroup.ADMIN),
-    ADMIN_SECRET("ADMIN", "admin-secret", ViewMode.NONE, MenuGroup.ADMIN),
+    ADMIN_HOME("ADMIN", "admin-home", ViewMode.NONE, MenuGroupEnum.ADMIN),
+    ADMIN_SECRET("ADMIN", "admin-secret", ViewMode.NONE, MenuGroupEnum.ADMIN),
 
 //    others
-    HOME(null, "", ViewMode.NONE, MenuGroup.HOME),
-    USER_HOME(null, "user-home", ViewMode.NONE, MenuGroup.USER),
-    REGISTER(null, "register", ViewMode.NONE, MenuGroup.SIGN_UP),
+    HOME(null, "", ViewMode.NONE, MenuGroupEnum.HOME),
+    USER_HOME(null, "user-home", ViewMode.NONE, MenuGroupEnum.USER),
+    REGISTER(null, "register", ViewMode.NONE, MenuGroupEnum.SIGN_UP),
     SIGN_IN("login"),
     UNKNOWN("unkown")
     ;
@@ -28,20 +28,20 @@ public enum FunctionCodeEnum {
     private final String base;
     private final String view;
     private final ViewMode viewMode;
-    private final MenuGroup menuGroup;
+    private final MenuGroupEnum menuGroupEnum;
 
-    FunctionCodeEnum(String base, String view, ViewMode viewMode, MenuGroup menuGroup) {
+    FunctionCodeEnum(String base, String view, ViewMode viewMode, MenuGroupEnum menuGroupEnum) {
         this.base = base;
         this.view = view;
         this.viewMode = viewMode;
-        this.menuGroup = menuGroup;
+        this.menuGroupEnum = menuGroupEnum;
     }
 
     FunctionCodeEnum(String view) {
         this.base = null;
         this.view = view;
         this.viewMode = null;
-        this.menuGroup = null;
+        this.menuGroupEnum = null;
     }
 
     public String getView() {
@@ -52,7 +52,7 @@ public enum FunctionCodeEnum {
         return viewMode;
     }
 
-    public MenuGroup getMenuGroup() {
-        return menuGroup;
+    public MenuGroupEnum getMenuGroupEnum() {
+        return menuGroupEnum;
     }
 }

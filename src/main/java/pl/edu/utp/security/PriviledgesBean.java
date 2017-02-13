@@ -24,7 +24,7 @@ import java.util.*;
  */
 @SpringComponent
 @VaadinSessionScope
-public class PriviledgesComponent implements ViewAccessControl, Serializable{
+public class PriviledgesBean implements ViewAccessControl, Serializable{
 
     private List<String> availableFunctions = new ArrayList<>();
 //    private List<FunctionCodeEnum> functionCodeEnums = new ArrayList<>();
@@ -39,7 +39,7 @@ public class PriviledgesComponent implements ViewAccessControl, Serializable{
     @Autowired
     private RoleRepository roleRepository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PriviledgesComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PriviledgesBean.class);
 
     @PostConstruct
     private void postConstruct(){
@@ -104,10 +104,6 @@ public class PriviledgesComponent implements ViewAccessControl, Serializable{
     @Override
     public boolean isAccessGranted(UI ui, String beanName) {
         final SpringView annotation = applicationContext.findAnnotationOnBean(beanName, SpringView.class);
-        if (annotation != null) {
-            return allowedViews.contains(annotation.name());
-        } else {
-            return false;
-        }
+        return annotation != null && allowedViews.contains(annotation.name());
     }
 }

@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @SpringComponent
 @VaadinSessionScope
-public class UserSessionComponent implements Serializable {
+public class UserSessionBean implements Serializable {
 
     private User currentUser;
 
@@ -33,12 +33,12 @@ public class UserSessionComponent implements Serializable {
     UserRepository userRepository;
 
     @Autowired
-    FunctionCacheComponent functionCacheComponent;
+    FunctionCacheBean functionCacheBean;
 
     @Autowired
-    PriviledgesComponent priviledgesComponent;
+    PriviledgesBean priviledgesBean;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserSessionComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserSessionBean.class);
 
     @PostConstruct
     private void postConstruct(){
@@ -46,7 +46,7 @@ public class UserSessionComponent implements Serializable {
 
     }
 
-    public UserSessionComponent() {
+    public UserSessionBean() {
     }
 
     boolean isCurrentUser(){
@@ -67,7 +67,7 @@ public class UserSessionComponent implements Serializable {
         LOGGER.info(LoggerUtils.getSeparator());
 
         //przeładowanie uprawnień
-        priviledgesComponent.reload(currentUser.getLogin());
+        priviledgesBean.reload(currentUser.getLogin());
     }
 
     public User getCurrentUser() {
@@ -139,18 +139,17 @@ public class UserSessionComponent implements Serializable {
         return result;
     }
 
-    /**
-     * Zwraca obiekt funkcji dla danego enuma i trybu widoku.
-     *
-     * @param action
-     * @param viewMode
-     * @return
-     */
+//    /**
+//     * Zwraca obiekt funkcji dla danego enuma i trybu widoku.
+//     *
+//     * @param action
+//     * @return
+//     */
 //    public Function getFunction(FunctionCodeEnum action, ViewMode viewMode) {
 //        return functionCacheComponent.getFunction(action, viewMode);
 //    }
     public Function getFunction(FunctionCodeEnum action) {
-        return functionCacheComponent.getFunction(action);
+        return functionCacheBean.getFunction(action);
     }
 
     /**
@@ -161,7 +160,7 @@ public class UserSessionComponent implements Serializable {
      * @return
      */
     public boolean hasAccess(FunctionCodeEnum functionCodeEnum) {
-        return priviledgesComponent.hasPriviledges(functionCodeEnum, functionCodeEnum.getViewMode());
+        return priviledgesBean.hasPriviledges(functionCodeEnum, functionCodeEnum.getViewMode());
     }
 
 }

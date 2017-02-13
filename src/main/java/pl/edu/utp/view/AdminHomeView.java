@@ -7,8 +7,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Created by xxbar on 10.01.2017.
  */
@@ -17,12 +15,14 @@ public class AdminHomeView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "admin-home";
 
+    public AdminHomeView() {
+        init();
+    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 
-    @PostConstruct
     void init() {
         setMargin(true);
         Label label = new Label("Admin Home View");
