@@ -71,6 +71,6 @@ public class MenuBean implements Serializable {
 
         MenuConfig user = createMenuConfig("User", null);
         user.addMenuItem(FunctionCodeEnum.USER_HOME, testIcon.getFontAvesomeIcon());
-        tabs.add(admin);
+        tabs.add(user);
     }
 }
