@@ -40,14 +40,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.commons.ui.MenuConfig;
 import pl.edu.utp.form.SignInForm;
+import pl.edu.utp.form.SignUpForm;
 import pl.edu.utp.security.MenuBean;
 import pl.edu.utp.security.MenuItemModel;
 import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.utils.StringGenerator;
-import pl.edu.utp.form.SignUpForm;
-import pl.edu.utp.view.simple.HomeView;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
+import pl.edu.utp.view.simple.HomeView;
+import pl.edu.utp.view.simple.UserHomeView;
 
 import java.util.Iterator;
 
@@ -285,9 +286,9 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
             getPushConfiguration().setTransport(Transport.WEBSOCKET);
             getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
             // Show the main UI
-            this.showView(homeView);
-
+//            this.showView(homeView);
             refresh();
+            getNavigator().navigateTo(UserHomeView.VIEW_NAME);
             return true;
         } catch (AuthenticationException ex) {
             return false;
