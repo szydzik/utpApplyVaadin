@@ -41,6 +41,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.commons.ui.MenuConfig;
 import pl.edu.utp.form.SimpleLoginForm;
 import pl.edu.utp.security.MenuBean;
+import pl.edu.utp.security.MenuItemModel;
 import pl.edu.utp.security.PriviledgesBean;
 import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.utils.StringGenerator;
@@ -69,7 +70,7 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
     private final MenuBean menuBean;
 //  Autowired - end
 
-    private boolean testMode = false;
+    private boolean responsive = false;
 
     private TestIcon testIcon = new TestIcon(100);
 
@@ -95,7 +96,7 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
     @Override
     protected void init(VaadinRequest request) {
         if (request.getParameter("test") != null) {
-            testMode = true;
+            responsive = false;
 
             if (browserCantRenderFontsConsistently()) {
                 getPage().getStyles().add(
@@ -108,7 +109,7 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
             menu.setWidth("320px");
         }
 
-        if (!testMode) {
+        if (responsive) {
             Responsive.makeResponsive(this);
         }
 
@@ -137,23 +138,18 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
                     it.next().removeStyleName("selected");
                 }
 
-//                for (menuBean.getTabs())
-
-//                for (Map.Entry<String, String> item : menuItems.entrySet()) {
-//                    if (event.getViewName().equals(item.getKey())) {
-//                        for (Iterator<Component> it = menuItemsLayout
-//                                .iterator(); it.hasNext();) {
-//                            Component c = it.next();
-//                            if (c.getCaption() != null
-//                                    && c.getCaption().startsWith(
-//                                    item.getValue())) {
-//                                c.addStyleName("selected");
-//                                break;
-//                            }
-//                        }
-//                        break;
-//                    }
-//                }
+                for (MenuItemModel i : menuBean.getAllMenuItems()){
+                    if (event.getViewName().equals(i.getFuncionCodeEnum().getView())) {
+                        for (Iterator<Component> it = menuItemsLayout.iterator(); it.hasNext();) {
+                            Component c = it.next();
+                            if (c.getCaption() != null && c.getCaption().startsWith(i.getTitle())) {
+                                c.addStyleName("selected");
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
                 menu.removeStyleName("valo-menu-visible");
             }
         });
