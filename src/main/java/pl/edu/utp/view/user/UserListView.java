@@ -5,7 +5,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import pl.edu.utp.security.FunctionCodeEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-@UIScope
+@ViewScope
 @SpringView(name = UserListView.VIEW_NAME)
 public class UserListView extends AbstractBaseView implements View {
 

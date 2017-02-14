@@ -5,13 +5,19 @@
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (101, true, 'ADMIN_HOME', null, 'ADMIN_HOME', 'Administracja', 'Pulpit', 'Widok domowy administratora');
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (102, true, 'ADMIN_SECRET', null, 'ADMIN_SECRET', 'Admin', 'Admin Secret View', 'Secret View');
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Home', 'Home');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register');
+-- INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register');
 -- INSERT INTO public.function(id, code, description, view) VALUES (104, 'REGISTER_VIEW', null, 'register');
 
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'User Home');
 
 -- INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
 INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Administracja', 'Lista użytkowników', 'Lista użytkowników');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (108, true, 'USER_DETAILS', null, 'USER_DETAILS', 'Administracja', 'Detale użytkownika', 'Detale użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (109, true, 'USER_CREATE', null, 'USER_CREATE', 'Administracja', 'Utwórz użytkownika', 'Utwórz użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (110, true, 'USER_EDIT', null, 'USER_EDIT', 'Administracja', 'Edytuj użytkownika', 'Edytuj użytkownika');
+
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (111, true, 'FUNCTION_LIST', null, 'FUNCTION_LIST', 'Administracja', 'Lista funkcji', 'Lista funkcji w systemie');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (112, true, 'FUNCTION_DETAILS', null, 'FUNCTION_DETAILS', 'Administracja', 'Szczegóły funkcji', 'Szczegóły funkcji');
 
 
 
@@ -21,10 +27,15 @@ INSERT INTO public.role (id, name) VALUES (101, 'ROLE_ADMIN');
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 101);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 102);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 103);
-INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 104);
+-- INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 104);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 105);
 -- INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 106);
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 107);
+INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 108);
+INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 109);
+INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 110);
+INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 111);
+INSERT INTO public.roles_functions(role_id, function_id) VALUES (101, 112);
 
 -- ROLE_USER
 INSERT INTO public.role (id, name) VALUES (102, 'ROLE_USER');
@@ -37,7 +48,7 @@ INSERT INTO public.roles_functions(role_id, function_id) VALUES (102, 105);
 -- ROLE_ANONYMOUS
 INSERT INTO public.role (id, name) VALUES (103, 'ROLE_ANONYMOUS');
 INSERT INTO public.roles_functions(role_id, function_id) VALUES (103, 103);
-INSERT INTO public.roles_functions(role_id, function_id) VALUES (103, 104);
+-- INSERT INTO public.roles_functions(role_id, function_id) VALUES (103, 104);
 
 -- user - ROLE_ADMIN
 INSERT INTO public.app_user(id, name, surname, login, password) VALUES (101, 'Admin', 'Admin', 'admin', 'p');

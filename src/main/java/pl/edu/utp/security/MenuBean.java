@@ -34,7 +34,6 @@ public class MenuBean implements Serializable {
 
     private MenuConfig createMenuConfig(String name, FontAwesome icon) {
         MenuConfig menuConfig = new MenuConfig(name, userSessionBean);
-        tabs.add(menuConfig);
         return menuConfig;
     }
 
@@ -57,13 +56,21 @@ public class MenuBean implements Serializable {
 
         MenuConfig home = createMenuConfig("Home", null);
         home.addMenuItem(FunctionCodeEnum.HOME, FontAwesome.HOME);
+        tabs.add(home);
 
         MenuConfig admin = createMenuConfig("Admin", null);
         admin.addMenuItem(FunctionCodeEnum.ADMIN_HOME, testIcon.getFontAvesomeIcon());
         admin.addMenuItem(FunctionCodeEnum.ADMIN_SECRET, testIcon.getFontAvesomeIcon());
         admin.addMenuItem(FunctionCodeEnum.USER_LIST, testIcon.getFontAvesomeIcon());
+        admin.addMenuItem(FunctionCodeEnum.USER_CREATE, testIcon.getFontAvesomeIcon());
+        admin.addMenuItem(FunctionCodeEnum.FUNCTION_LIST, testIcon.getFontAvesomeIcon());
+        admin.addMenuItem(FunctionCodeEnum.ROLE_LIST, testIcon.getFontAvesomeIcon());
+        admin.addMenuItem(FunctionCodeEnum.ROLE_CREATE, testIcon.getFontAvesomeIcon());
+        tabs.add(admin);
+
 
         MenuConfig user = createMenuConfig("User", null);
         user.addMenuItem(FunctionCodeEnum.USER_HOME, testIcon.getFontAvesomeIcon());
+        tabs.add(admin);
     }
 }
