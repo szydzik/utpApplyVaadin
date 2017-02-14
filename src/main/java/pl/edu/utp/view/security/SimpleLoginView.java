@@ -1,20 +1,26 @@
-package pl.edu.utp.form;
+package pl.edu.utp.view.security;
 
-import com.vaadin.event.ShortcutAction;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.edu.utp.commons.ui.AbstractBaseView;
+import pl.edu.utp.security.FunctionCodeEnum;
+import pl.edu.utp.validator.CustomValidator;
 
 /**
  * Created by xxbar on 08.01.2017.
  */
 //@UIScope
 //@SpringView(name = SimpleLoginView.VIEW_NAME)
-public class SimpleLoginForm extends VerticalLayout {// implements View {
+@Deprecated
+public class SimpleLoginView extends AbstractBaseView implements View {
 
-//    public static final String VIEW_NAME = "login";
+    public static final String VIEW_NAME = "login";
 
     private final TextField email;
     private final PasswordField password;
@@ -24,7 +30,12 @@ public class SimpleLoginForm extends VerticalLayout {// implements View {
     private final Button googleButton;
     private final Button gitHubButton;
 
-    public SimpleLoginForm(LoginCallback callback) {
+    @Override
+    public FunctionCodeEnum getFunctionCodeEnum() {
+        return FunctionCodeEnum.SIGN_IN;
+    }
+
+    public SimpleLoginView() {
         setSizeFull();
 
         // Create the email input field
@@ -34,13 +45,14 @@ public class SimpleLoginForm extends VerticalLayout {// implements View {
         email.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
         email.setIcon(FontAwesome.ENVELOPE);
         email.setInputPrompt("Email");
-//        email.addValidator(new EmailValidator(
-//                "Username must be an email address"));
+        email.addValidator(new EmailValidator(
+                "Username must be an email address"));
         email.setInvalidAllowed(false);
 
         // Create the password input field
         password = new PasswordField("Password:");
         password.setWidth("300px");
+        password.addValidator(new CustomValidator.PasswordValidator());
         password.setRequired(true);
         password.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
         password.setIcon(FontAwesome.LOCK);
@@ -49,17 +61,18 @@ public class SimpleLoginForm extends VerticalLayout {// implements View {
         password.setNullRepresentation("");
 
         // Create login button
-        loginButton = new Button("Login", evt -> {
-            String pword = password.getValue();
-            password.setValue("");
-            if (!callback.login(email.getValue(), pword)) {
-                Notification.show("Login failed");
-                email.focus();
-            }
-        });
-        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        loginButton = new Button("Login");
         loginButton.setWidth("300px");
         loginButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+
+        loginButton.addClickListener(event -> {
+            if (!email.isValid() || !password.isValid()) {
+                return;
+            }
+            String username = this.email.getValue();
+            String password = this.password.getValue();
+
+        });
 
         facebookButton = new Button("Log in with Facebook", FontAwesome.FACEBOOK);
         facebookButton.setWidth("300px");
@@ -72,7 +85,6 @@ public class SimpleLoginForm extends VerticalLayout {// implements View {
         googleButton = new Button("Log in with Google", FontAwesome.GOOGLE);
         googleButton.setWidth("300px");
         googleButton.addClickListener(event -> {});
-        googleButton.setStyleName(ValoTheme.BUTTON_DANGER);
 
         gitHubButton = new Button("Log in with Github", FontAwesome.GITHUB);
         gitHubButton.setWidth("300px");
@@ -86,17 +98,16 @@ public class SimpleLoginForm extends VerticalLayout {// implements View {
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
 
-        setSizeFull();
-        addComponent(fields);
-        setComponentAlignment(fields, Alignment.MIDDLE_CENTER);
-        setStyleName(Reindeer.LAYOUT_BLUE);
-
+        // The view root layout
+        VerticalLayout viewLayout = new VerticalLayout(fields);
+        viewLayout.setSizeFull();
+        viewLayout.setComponentAlignment(fields, Alignment.MIDDLE_CENTER);
+        viewLayout.setStyleName(Reindeer.LAYOUT_BLUE);
+        setCompositionRoot(viewLayout);
     }
 
-    @FunctionalInterface
-    public interface LoginCallback {
-
-        boolean login(String username, String password);
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 
 }

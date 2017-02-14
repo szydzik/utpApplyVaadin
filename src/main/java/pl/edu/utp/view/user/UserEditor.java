@@ -1,4 +1,4 @@
-package pl.edu.utp.view;
+package pl.edu.utp.view.user;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.event.ShortcutAction;

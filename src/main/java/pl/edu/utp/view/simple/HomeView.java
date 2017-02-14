@@ -1,4 +1,4 @@
-package pl.edu.utp.view;
+package pl.edu.utp.view.simple;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;

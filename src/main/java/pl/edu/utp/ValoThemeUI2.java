@@ -39,12 +39,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.utp.commons.ui.MenuConfig;
-import pl.edu.utp.form.SimpleLoginForm;
+import pl.edu.utp.form.SignInForm;
 import pl.edu.utp.security.MenuBean;
 import pl.edu.utp.security.MenuItemModel;
 import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.utils.StringGenerator;
-import pl.edu.utp.view.HomeView;
+import pl.edu.utp.form.SignUpForm;
+import pl.edu.utp.view.simple.HomeView;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
 
@@ -205,13 +206,22 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
         menu.addComponent(settings);
 
         {
-            Button btnSignIn = new Button("Sign In", evt -> {
-                panel.setContent(new SimpleLoginForm(this::login));
-            });
+            Button btnSignIn = new Button("Sign In", evt ->
+                panel.setContent(new SignInForm(this::login))
+            );
             btnSignIn.setIcon(FontAwesome.SIGN_IN);
             btnSignIn.setHtmlContentAllowed(true);
             btnSignIn.setPrimaryStyleName(ValoTheme.MENU_ITEM);
             menuItemsLayout.addComponent(btnSignIn);
+
+            Button btnSignUp = new Button("Sign Up", evt -> {
+                panel.setContent(new SignUpForm());
+            });
+            btnSignUp.setIcon(FontAwesome.REGISTERED);
+            btnSignUp.setHtmlContentAllowed(true);
+            btnSignUp.setPrimaryStyleName(ValoTheme.MENU_ITEM);
+            menuItemsLayout.addComponent(btnSignUp);
+
 
             Button btnLogout = new Button("Logout", event -> {
                 this.logout();

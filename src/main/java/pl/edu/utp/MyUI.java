@@ -22,14 +22,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import pl.edu.utp.form.SimpleLoginForm;
+import pl.edu.utp.form.SignInForm;
 import pl.edu.utp.security.MenuBean;
 import pl.edu.utp.security.PriviledgesBean;
 import pl.edu.utp.security.SecurityUtils;
 import pl.edu.utp.security.UserSessionBean;
-import pl.edu.utp.view.*;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
+import pl.edu.utp.view.simple.AdminHomeView;
+import pl.edu.utp.view.simple.AdminSecretView;
+import pl.edu.utp.view.simple.HomeView;
+import pl.edu.utp.view.simple.UserHomeView;
+import pl.edu.utp.view.user.UserListView;
 
 /**
  * Created by xxbar on 09.01.2017.
@@ -141,14 +145,14 @@ public class MyUI extends UI implements ViewDisplay {
 //        btnSignIn = createNavigationButton("Sign in", FontAwesome.SIGN_IN, SimpleLoginView.VIEW_NAME);
 //        navigationBar.addComponent(btnSignIn);
         btnSignIn = new Button("Sign In", evt -> {
-            panel.setContent(new SimpleLoginForm(this::login));
+            panel.setContent(new SignInForm(this::login));
         });
         btnSignIn.addStyleName(ValoTheme.BUTTON_BORDERLESS);
         btnSignIn.setIcon(FontAwesome.SIGN_IN);
         navigationBar.addComponent(btnSignIn);
 
-        btnSignUp = createNavigationButton("Sign up", FontAwesome.PENCIL_SQUARE_O,RegisterView.VIEW_NAME);
-        navigationBar.addComponent(btnSignUp);
+//        btnSignUp = createNavigationButton("Sign up", FontAwesome.PENCIL_SQUARE_O, RegisterForm.VIEW_NAME);
+//        navigationBar.addComponent(btnSignUp);
 
 //        btnLogout = createNavigationButton("Logout", FontAwesome.SIGN_OUT,HomeView.VIEW_NAME);
 //        navigationBar.addComponent(btnLogout);

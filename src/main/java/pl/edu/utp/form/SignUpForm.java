@@ -1,17 +1,11 @@
-package pl.edu.utp.view;
+package pl.edu.utp.form;
 
 import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.edu.utp.commons.ui.AbstractBaseView;
-import pl.edu.utp.security.FunctionCodeEnum;
 import pl.edu.utp.validator.CustomValidator;
 
 import java.util.Date;
@@ -19,11 +13,7 @@ import java.util.Date;
 /**
  * Created by szydzik on 08.01.2017.
  */
-@UIScope
-@SpringView(name = RegisterView.VIEW_NAME)
-public class RegisterView extends AbstractBaseView implements View {
-
-    public static final String VIEW_NAME = "register";
+public class SignUpForm extends VerticalLayout {
 
     private final TextField name;
     private final TextField surname;
@@ -33,12 +23,7 @@ public class RegisterView extends AbstractBaseView implements View {
 
     private final Button registerButton;
 
-    @Override
-    public FunctionCodeEnum getFunctionCodeEnum() {
-        return FunctionCodeEnum.REGISTER;
-    }
-
-    public RegisterView() {
+    public SignUpForm() {
         setSizeFull();
 
         // Create the user input field
@@ -94,29 +79,20 @@ public class RegisterView extends AbstractBaseView implements View {
         // Create login button
         registerButton = new Button("Register");
         registerButton.addClickListener(event -> {
-//            TODO
+//            TODO Rejestracja użytkownika w bazie
             System.out.println("Register Button clicked");
         });
 
         // Add both to a panel
         VerticalLayout fields = new VerticalLayout(email, password, name, surname, birthDate, registerButton);
-//        fields.setCaption("Please login to access the application. (test@test.com/passw0rd)");
         fields.setSpacing(true);
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
 
-        // The view root layout
-        VerticalLayout viewLayout = new VerticalLayout(fields);
-        viewLayout.setSizeFull();
-        viewLayout.setComponentAlignment(fields, Alignment.MIDDLE_CENTER);
-        viewLayout.setStyleName(Reindeer.LAYOUT_BLUE);
-        setCompositionRoot(viewLayout);
-
-
-    }
-
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        addComponents(fields);
+        setSizeFull();
+        setComponentAlignment(fields, Alignment.MIDDLE_CENTER);
+        setStyleName(Reindeer.LAYOUT_BLUE);
 
     }
 

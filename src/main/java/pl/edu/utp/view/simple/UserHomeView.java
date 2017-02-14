@@ -1,4 +1,4 @@
-package pl.edu.utp.view;
+package pl.edu.utp.view.simple;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -10,12 +10,12 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * Created by xxbar on 10.01.2017.
  */
-@SpringView(name = AdminHomeView.VIEW_NAME)
-public class AdminHomeView extends VerticalLayout implements View {
+@SpringView(name = UserHomeView.VIEW_NAME)
+public class UserHomeView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "admin-home";
+    public static final String VIEW_NAME = "user-home";
 
-    public AdminHomeView() {
+    public UserHomeView() {
         init();
     }
 
@@ -25,7 +25,7 @@ public class AdminHomeView extends VerticalLayout implements View {
 
     void init() {
         setMargin(true);
-        Label label = new Label("Admin Home View");
+        Label label = new Label("User Home View");
         label.addStyleName(ValoTheme.LABEL_LARGE);
         label.setSizeUndefined();
         addComponent(label);
