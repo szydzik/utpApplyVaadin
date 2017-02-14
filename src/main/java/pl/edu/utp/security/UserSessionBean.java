@@ -53,11 +53,16 @@ public class UserSessionBean implements Serializable {
         return currentUser != null;
     }
 
+    public void refresh(){
+        refreshUserFromContext();
+
+    }
+
     /**
      * Pobieranie loginu użytkownika z sesji i ładowanie użytkownika z bazy danych
      *
      */
-    public void refreshUserFromContext() {
+    private void refreshUserFromContext() {
         LOGGER.info(LoggerUtils.getSeparator());
         String username = getUserName();
         LOGGER.info("User from session: {}", username);

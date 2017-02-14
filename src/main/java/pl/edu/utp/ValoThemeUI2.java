@@ -42,10 +42,8 @@ import pl.edu.utp.commons.ui.MenuConfig;
 import pl.edu.utp.form.SimpleLoginForm;
 import pl.edu.utp.security.MenuBean;
 import pl.edu.utp.security.MenuItemModel;
-import pl.edu.utp.security.PriviledgesBean;
 import pl.edu.utp.security.UserSessionBean;
 import pl.edu.utp.utils.StringGenerator;
-import pl.edu.utp.utils.TestIcon;
 import pl.edu.utp.view.HomeView;
 import pl.edu.utp.view.error.AccessDeniedView;
 import pl.edu.utp.view.error.PageNotFoundView;
@@ -56,7 +54,7 @@ import java.util.Iterator;
 @Title("Valo Theme Test")
 @StyleSheet("valo-theme-ui.css")
 @PreserveOnRefresh
-@SpringUI(path = "/valo")
+@SpringUI
 @SpringViewDisplay
 public class ValoThemeUI2 extends UI implements ViewDisplay {
 
@@ -66,13 +64,10 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
     private final SpringViewProvider viewProvider;
     private final HomeView homeView;
     private final UserSessionBean userSessionBean;
-    private final PriviledgesBean priviledgesBean;
     private final MenuBean menuBean;
 //  Autowired - end
 
     private boolean responsive = false;
-
-    private TestIcon testIcon = new TestIcon(100);
 
     private ValoMenuLayout root = new ValoMenuLayout();
     private Panel panel = root.getContentContainer();
@@ -83,13 +78,12 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
     }
 
     @Autowired
-    public ValoThemeUI2(AuthenticationManager authenticationManager, PageNotFoundView pageNotFoundView, SpringViewProvider viewProvider, HomeView homeView, UserSessionBean userSessionBean, PriviledgesBean priviledgesBean, MenuBean menuBean) {
+    public ValoThemeUI2(AuthenticationManager authenticationManager, PageNotFoundView pageNotFoundView, SpringViewProvider viewProvider, HomeView homeView, UserSessionBean userSessionBean, MenuBean menuBean) {
         this.authenticationManager = authenticationManager;
         this.pageNotFoundView = pageNotFoundView;
         this.viewProvider = viewProvider;
         this.homeView = homeView;
         this.userSessionBean = userSessionBean;
-        this.priviledgesBean = priviledgesBean;
         this.menuBean = menuBean;
     }
 
@@ -246,15 +240,14 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
                     b.setHtmlContentAllowed(true);
                     b.setPrimaryStyleName(ValoTheme.MENU_ITEM);
                     b.setIcon(item.getIcon());
+//                    b.setIcon(FontAwesome.HOME);
                     menuItemsLayout.addComponent(b);
                 });
 
             }
             label.setValue(label.getValue() + " <span class=\"valo-menu-badge\">"
                     + "test" + "</span>");
-
         }
-
         return menu;
     }
 
@@ -302,8 +295,7 @@ public class ValoThemeUI2 extends UI implements ViewDisplay {
     }
 
     private void refresh(){
-//        refreshMenu();
-        userSessionBean.refreshUserFromContext();
+        userSessionBean.refresh();
         menuBean.refresh();
     }
 }

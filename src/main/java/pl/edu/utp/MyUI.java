@@ -35,7 +35,7 @@ import pl.edu.utp.view.error.PageNotFoundView;
  * Created by xxbar on 09.01.2017.
  */
 @Theme(ValoTheme.THEME_NAME)
-@SpringUI
+@SpringUI(path = "/old")
 //@Push(transport = Transport.WEBSOCKET_XHR) // Websocket would bypass the filter chain, Websocket+XHR works
 //@SpringViewDisplay
 public class MyUI extends UI implements ViewDisplay {
@@ -248,7 +248,7 @@ public class MyUI extends UI implements ViewDisplay {
 
     private void refresh(){
         refreshMenu();
-        userSessionBean.refreshUserFromContext();
+        userSessionBean.refresh();
         menuBean.refresh();
     }
 

@@ -43,7 +43,7 @@ public class UserListView extends AbstractBaseView implements View {
         this.filter = new TextField();
         this.addNewBtn = new Button("New user", FontAwesome.PLUS);
 
-        grid.setHeight(300, Unit.PIXELS);
+        grid.setSizeFull();
         grid.setColumns("id", "name", "surname", "login");
 
         filter.setInputPrompt("Filter by surname");
@@ -69,7 +69,7 @@ public class UserListView extends AbstractBaseView implements View {
         HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 
         VerticalLayout fields = new VerticalLayout(actions, grid, editor);
-        fields.setSizeUndefined();
+        fields.setSizeFull();
         actions.setSpacing(true);
         fields.setMargin(true);
         fields.setSpacing(true);
@@ -82,16 +82,8 @@ public class UserListView extends AbstractBaseView implements View {
     }
 
     void listUsers(String text) {
-        List<User> list = repo.findAll();
-        if (StringUtils.isEmpty(text)) {
-            grid.setContainerDataSource(
-                    new BeanItemContainer(User.class, repo.findAll()));
-        }
-        else {
-            grid.setContainerDataSource(
-                    new BeanItemContainer(User.class, repo.findBySurnameStartsWithIgnoreCase(text)
-            ));
-        }
+        List<User> list = StringUtils.isEmpty(text) ? repo.findAll() : repo.findBySurnameStartsWithIgnoreCase(text);
+        grid.setContainerDataSource(new BeanItemContainer<>(User.class, list));
     }
 
     @Override
