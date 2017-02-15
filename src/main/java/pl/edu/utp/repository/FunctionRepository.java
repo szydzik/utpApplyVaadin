@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface FunctionRepository extends CrudRepository<Function, Long> {
     List<Function> findAll();
+    List<Function> findByCodeStartsWithIgnoreCase(String code);
 }
