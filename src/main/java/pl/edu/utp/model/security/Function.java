@@ -24,17 +24,6 @@ public class Function {
     public Function(){
     }
 
-    public Function(String code, String name, String description, String functionEnum, String menuName, Boolean active, String menuGroup, Collection<Role> roles) {
-        this.code = code;
-        this.name = name;
-        this.description = description;
-        this.functionEnum = functionEnum;
-        this.menuName = menuName;
-        this.active = active;
-        this.menuGroup = menuGroup;
-        this.roles = roles;
-    }
-
     public Long getId() {
         return id;
     }

@@ -14,7 +14,6 @@ import pl.edu.utp.commons.ui.AbstractBaseView;
 import pl.edu.utp.model.security.Function;
 import pl.edu.utp.repository.FunctionRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,17 +26,15 @@ public class FunctionListView extends AbstractBaseView implements View {
     public static final String VIEW_NAME = "function-list";
 
     private FunctionRepository repo;
-    private FunctionEditor editor;
     private Grid grid;
     private TextField filter;
     private Button addNewBtn;
 
 
     @Autowired
-    public FunctionListView(FunctionRepository repo, FunctionEditor editor) {
+    public FunctionListView(FunctionRepository repo) {
 
         this.repo = repo;
-        this.editor = editor;
         this.grid = new Grid();
         this.filter = new TextField();
         this.addNewBtn = new Button("New function", FontAwesome.PLUS);
@@ -47,27 +44,12 @@ public class FunctionListView extends AbstractBaseView implements View {
 
         filter.setInputPrompt("Filter by code");
         filter.addTextChangeListener(e -> listFunctions(e.getText()));
-        grid.addSelectionListener(e -> {
-            if (e.getSelected().isEmpty()) {
-                editor.setVisible(false);
-            }
-            else {
-                editor.editFunction((Function) grid.getSelectedRow());
-            }
-        });
-
-        addNewBtn.addClickListener(e -> editor.editFunction(new Function("","","","","", true, "",  new ArrayList<>())));
-
-        editor.setChangeHandler(() -> {
-            editor.setVisible(false);
-            listFunctions(filter.getValue());
-        });
 
         listFunctions(null);
 
         HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 
-        VerticalLayout fields = new VerticalLayout(actions, grid, editor);
+        VerticalLayout fields = new VerticalLayout(actions, grid);
         fields.setSizeFull();
         actions.setSpacing(true);
         fields.setMargin(true);

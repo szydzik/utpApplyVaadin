@@ -8,11 +8,15 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import pl.edu.utp.commons.ui.AbstractBaseView;
 import pl.edu.utp.model.security.Role;
 import pl.edu.utp.repository.RoleRepository;
+import pl.edu.utp.security.FunctionCodeEnum;
+import pl.edu.utp.security.PriviledgesBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +30,32 @@ public class RoleListView extends AbstractBaseView implements View {
 
     public static final String VIEW_NAME = "role-list";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleListView.class);
+
+    @Override
+    public FunctionCodeEnum getFunction() {
+        return FunctionCodeEnum.ROLE_LIST;
+    }
+
     private RoleRepository repo;
+    private PriviledgesBean priviledgesBean;
     private RoleEditor editor;
     private Grid grid;
     private TextField filter;
     private Button addNewBtn;
+    private Button showBtn;
 
     @Autowired
-    public RoleListView(RoleRepository repo, RoleEditor editor) {
+    public RoleListView(RoleRepository repo, RoleEditor editor, PriviledgesBean priviledgesBean) {
         this.repo = repo;
         this.editor = editor;
+        this.priviledgesBean = priviledgesBean;
         this.grid = new Grid();
         this.filter = new TextField();
         this.addNewBtn = new Button("New role", FontAwesome.PLUS);
+        this.showBtn = new Button("Show role id = 101", (e) -> {
+            showRole();
+        });
 
         grid.setSizeFull();
         grid.setColumns("id", "name");
@@ -63,7 +80,7 @@ public class RoleListView extends AbstractBaseView implements View {
 
         listRoles(null);
 
-        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, showBtn);
 
         VerticalLayout fields = new VerticalLayout(actions, grid, editor);
         fields.setSizeFull();
@@ -86,6 +103,17 @@ public class RoleListView extends AbstractBaseView implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
+    }
+
+    public void showRole(){
+        getUI().getNavigator().navigateTo(RoleDetailsView.VIEW_NAME+"/id=101");
+    }
+
+    public void changePage(Long itemId, FunctionCodeEnum outcome) {
+        // jeśli mamy uprawnienia to zmieniamy stronę
+        if (priviledgesBean.hasPriviledges(outcome)) {
+//            changePage(itemId, outcome);
+        }
     }
 
 }

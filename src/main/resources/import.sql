@@ -2,26 +2,26 @@
 -- INSERT INTO public.function(id, code, description, view) VALUES (101, 'ADMIN_HOME_VIEW', null, 'admin-home');
 -- INSERT INTO public.function(id, code, description, view) VALUES (102, 'ADMIN_SECRET_VIEW', null, 'admin-secret');
 -- INSERT INTO public.function(id, code, description, view) VALUES (103, 'HOME', null, '');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (101, true, 'ADMIN_HOME', null, 'ADMIN_HOME', 'Administracja', 'Pulpit', 'Widok domowy administratora');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (102, true, 'ADMIN_SECRET', null, 'ADMIN_SECRET', 'Admin', 'Admin Secret View', 'Sekretny widok administratora');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Home', 'Dostęp do strony głównej');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (101, true, 'ADMIN_HOME', null, 'ADMIN_HOME', 'Pulpit', 'Widok domowy administratora');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (102, true, 'ADMIN_SECRET', null, 'ADMIN_SECRET', 'Admin Secret View', 'Sekretny widok administratora');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (103, true, 'HOME', null, 'HOME', 'Home', 'Dostęp do strony głównej');
 -- INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (104, true, 'REGISTER_VIEW', null, 'REGISTER', 'Register', 'Register', 'Register');
 -- INSERT INTO public.function(id, code, description, view) VALUES (104, 'REGISTER_VIEW', null, 'register');
 
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User', 'User Home', 'Dostęp do pulpitu użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (105, true, 'USER_HOME_VIEW', null, 'USER_HOME', 'User Home', 'Dostęp do pulpitu użytkownika');
 
 -- INSERT INTO public.function(id, code, description, view) VALUES (106, 'ACCESS_CONTROL_VIEW', null, 'access');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Administracja', 'Lista użytkowników', 'Przegląd listy użytkowników');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (108, true, 'USER_DETAILS', null, 'USER_DETAILS', 'Administracja', 'Detale użytkownika', 'Przegląd danych użytkownika');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (109, true, 'USER_CREATE', null, 'USER_CREATE', 'Administracja', 'Utwórz użytkownika', 'Tworzenie użytkownika');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (110, true, 'USER_EDIT', null, 'USER_EDIT', 'Administracja', 'Edytuj użytkownika', 'Edycja użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (107, true, 'USER_LIST', null, 'USER_LIST', 'Lista użytkowników', 'Przegląd listy użytkowników');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (108, true, 'USER_DETAILS', null, 'USER_DETAILS', 'Detale użytkownika', 'Przegląd danych użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (109, true, 'USER_CREATE', null, 'USER_CREATE', 'Utwórz użytkownika', 'Tworzenie użytkownika');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (110, true, 'USER_EDIT', null, 'USER_EDIT', 'Edytuj użytkownika', 'Edycja użytkownika');
 
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (111, true, 'FUNCTION_LIST', null, 'FUNCTION_LIST', 'Administracja', 'Lista funkcji', 'Przegląd listy funkcji systemu');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (112, true, 'FUNCTION_DETAILS', null, 'FUNCTION_DETAILS', 'Administracja', 'Szczegóły funkcji', 'Szczegóły funkcji');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (111, true, 'FUNCTION_LIST', null, 'FUNCTION_LIST', 'Lista funkcji', 'Przegląd listy funkcji systemu');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (112, true, 'FUNCTION_DETAILS', null, 'FUNCTION_DETAILS',  'Szczegóły funkcji', 'Szczegóły funkcji');
 
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (113, true, 'ROLE_LIST', null, 'ROLE_LIST', 'Administracja', 'Lista ról', 'Przegląd listy ról');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (114, true, 'ROLE_DETAILS', null, 'ROLE_DETAILS', 'Administracja', 'Szczegóły roli', 'Przegląd szczegółów roli');
-INSERT INTO public.function(id, active, code, description, function_enum, menu_group, menu_name, name) VALUES (115, true, 'ROLE_CREATE', null, 'ROLE_CREATE', 'Administracja', 'Dodaj rolę', 'Dodawanie roli');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (113, true, 'ROLE_LIST', null, 'ROLE_LIST', 'Lista ról', 'Przegląd listy ról');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (114, true, 'ROLE_DETAILS', null, 'ROLE_DETAILS',  'Szczegóły roli', 'Przegląd szczegółów roli');
+INSERT INTO public.function(id, active, code, description, function_enum, menu_name, name) VALUES (115, true, 'ROLE_CREATE', null, 'ROLE_CREATE', 'Dodaj rolę', 'Dodawanie roli');
 
 
 

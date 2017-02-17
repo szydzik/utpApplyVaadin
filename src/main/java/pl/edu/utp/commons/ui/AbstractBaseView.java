@@ -16,6 +16,12 @@ import java.util.List;
  */
 public abstract class AbstractBaseView extends CustomComponent implements Serializable {
 
+
+    public FunctionCodeEnum getFunction() {
+        return FunctionCodeEnum.UNKNOWN;
+    }
+
+
     @Autowired
     private UserSessionBean userSessionBean;
 
