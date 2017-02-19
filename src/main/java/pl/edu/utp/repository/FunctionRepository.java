@@ -11,4 +11,5 @@ import java.util.List;
 public interface FunctionRepository extends Repository<Function, Long> {
     List<Function> findAll();
     List<Function> findByCodeStartsWithIgnoreCase(String code);
+    Function findByName(String name);
 }

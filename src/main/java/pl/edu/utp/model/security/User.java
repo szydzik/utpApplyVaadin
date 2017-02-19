@@ -20,7 +20,7 @@ public class User implements UserDetails {
 //    private boolean enabled;
 //    private boolean tokenExpired;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) //cascade = CascadeType.ALL,
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -157,3 +157,11 @@ public class User implements UserDetails {
                 '}';
     }
 }
+
+
+//        CascadeType.PERSIST – włączanie nowej encji do kontekstu
+//        CascadeType.MERGE – aktualizacja encji
+//        CascadeType.REMOVE – usuwanie encji
+//        CascadeType.REFRESH – odświeżanie stanu encji z bazy
+//        CascadeType.DETACH – odłączenie kolekcji
+//        CascadeType.ALL– wszystkie powyższe
